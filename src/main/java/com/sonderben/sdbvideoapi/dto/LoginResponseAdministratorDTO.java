@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginResponseDTO {
-    private ClientDTO user;
+public class LoginResponseAdministratorDTO {
+    private administratorDTO user;
     private String token;
 }

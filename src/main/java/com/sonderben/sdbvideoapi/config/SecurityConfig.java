@@ -1,8 +1,10 @@
 package com.sonderben.sdbvideoapi.config;
 
 import com.sonderben.sdbvideoapi.security.TokenAuthenticationFilter;
+import com.sonderben.sdbvideoapi.security.TokenAuthenticationFilterAdmin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,6 +18,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public TokenAuthenticationFilter createTokenAuthenticationFilter() {
         return new TokenAuthenticationFilter();
     }
+    @Bean
+    public TokenAuthenticationFilterAdmin createTokenAuthenticationFilterAdmin(){
+        return new TokenAuthenticationFilterAdmin();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -34,13 +41,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new RestAuthenticationEntryPoint())
                 .and()*/
                 .authorizeRequests()
-                .antMatchers("/access",
-                        "/user/**")
-                .permitAll()
+                .antMatchers(
+                        "/client/sign_up",
+                        "/client/login",
+                        "/admin/sign_up",
+                        "/admin/login"
+                ).permitAll()
+                .antMatchers("/profile",
+                        "/profile/**",
+                        "/my_list",
+                        "/my_list/**",
+                        "/historic",
+                        "/historic/**"
+
+                ).hasRole("USER")
+                .antMatchers(HttpMethod.GET,"/category").hasRole("USER")
+                .antMatchers(HttpMethod.GET,"/movie").hasRole("USER")
+                .antMatchers(HttpMethod.GET,"/movie/**").hasRole("USER")
                 .anyRequest()
-                .hasRole("USER")
+                .hasRole("ADMIN")
                 //.authenticated()
         ;
         http.addFilterBefore(createTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(createTokenAuthenticationFilterAdmin(),UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -1,7 +1,7 @@
 package com.sonderben.sdbvideoapi.security;
 
-import com.sonderben.sdbvideoapi.entity.Client;
-import com.sonderben.sdbvideoapi.service.ClientService;
+import com.sonderben.sdbvideoapi.entity.Administrator;
+import com.sonderben.sdbvideoapi.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,21 +15,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class TokenAuthenticationFilter extends OncePerRequestFilter {
+public class TokenAuthenticationFilterAdmin extends OncePerRequestFilter {
     @Autowired
-    private ClientService clientService;
+    private AdministratorService administratorService;
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt=getSubjectJwtFromRequest(request);
         try {
-            if (StringUtils.hasText(jwt) && clientService.validateToken(jwt)) {
-                String email = clientService.getClientEmailFromToken(jwt);
-                Client client = clientService.findByClientEmail(email);
+            if (StringUtils.hasText(jwt) && administratorService.validateToken(jwt)) {
+                String email = administratorService.getClientEmailFromToken(jwt);
+                Administrator admin = administratorService.findByClientEmail(email);
 
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(client,
-                        null, client.getAuthorities());
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(admin,
+                        null, admin.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);

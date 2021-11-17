@@ -11,7 +11,7 @@ public class ProfileDto extends Dto{
 
     private Long id;
     private String name;
-    //private Long userId;
+    //private Long clientId;
     private Boolean isMainProfile;
     private String urlImg;
     private String pin;

@@ -4,10 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class LoginResponseDTO {
-    private ClientDTO user;
-    private String token;
+public class LoginAdministratorRequestDTO {
+    String email;
+    String password;
 }

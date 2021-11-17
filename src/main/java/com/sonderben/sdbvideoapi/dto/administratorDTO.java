@@ -2,12 +2,17 @@ package com.sonderben.sdbvideoapi.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginResponseDTO {
-    private ClientDTO user;
-    private String token;
+public class administratorDTO {
+
+    Long id;
+    String fullName;
+    String email;
+
 }
