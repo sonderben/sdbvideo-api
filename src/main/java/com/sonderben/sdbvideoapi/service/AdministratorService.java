@@ -1,6 +1,7 @@
 package com.sonderben.sdbvideoapi.service;
 
 import com.sonderben.sdbvideoapi.Utiles.Converter;
+import com.sonderben.sdbvideoapi.Utiles.Utile;
 import com.sonderben.sdbvideoapi.dto.LoginAdministratorRequestDTO;
 import com.sonderben.sdbvideoapi.dto.LoginResponseAdministratorDTO;
 import com.sonderben.sdbvideoapi.entity.Administrator;
@@ -19,8 +20,8 @@ import java.util.List;
 public class AdministratorService {
     @Autowired
     AdministratorRepository repository;
-    @Value("${jwt.key}")
-    String KEY;
+    //@Value("${jwt.key}")
+    String KEY="awed8kfSdDSa8!m";
 
 
     public List<Administrator> findAll() {
@@ -47,7 +48,7 @@ public class AdministratorService {
         Administrator entityFind = repository.findById(id).orElse(null);
         if (entityFind != null)
             return repository.save(entity);
-        return null;
+        throw new BadRequestException("Administrator con admin "+id+" don't exist") ;
     }
 
 
@@ -55,22 +56,24 @@ public class AdministratorService {
 
         Administrator client = repository.findAdministratorByEmailAndPassword(request.getEmail(), request.getPassword());
         if (client != null)
-            return Converter.convert(client, createToken(client));
+            return Converter.convert(client, Utile.createToken(client.getEmail()));
         else
             throw new BadRequestException("wrong password or wrong email");
     }
 
 
-    public String createToken(Administrator requestDTO) {
+    /*public String createToken(Administrator requestDTO) {
         Date init = new Date();
         Date end = new Date(init.getTime() + 1_000 * 60 * 60 * 24);
-        return Jwts.builder()
+        String jwt= Jwts.builder()
                 .setSubject(requestDTO.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(end)
                 .signWith(SignatureAlgorithm.HS512, KEY)
                 .compact();
-    }
+        System.err.println(jwt);
+        return jwt;
+    }*/
 
     public String getClientEmailFromToken(String jwt) {
         try {
@@ -103,6 +106,6 @@ public class AdministratorService {
         }*/ catch (ExpiredJwtException e) {
             //log.error("JWT was accepted after it expired and must be rejected");
         }
-        return false;
+        return true;
     }
 }

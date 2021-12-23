@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -37,7 +38,7 @@ public abstract class BaseControllerImpl<ENTITY extends BaseEntity, S extends Ba
 
     @PostMapping("")
     @Transactional
-    public ResponseEntity<ENTITY> save(@RequestBody ENTITY entity) {
+    public ResponseEntity<ENTITY> save(@RequestBody @Valid ENTITY entity) {
         if(entity instanceof Movie){
             Movie movie= (Movie) entity;
             if(movie.getDescription()==null)
@@ -67,7 +68,7 @@ public abstract class BaseControllerImpl<ENTITY extends BaseEntity, S extends Ba
         ENTITY entity=service.delete(id);
 
         if(entity!=null)
-            return  new ResponseEntity<ENTITY>(entity, HttpStatus.OK);
+            return  new ResponseEntity<>(entity, HttpStatus.OK);
         else
             throw new BadRequestException("Entity don't exist");
     }

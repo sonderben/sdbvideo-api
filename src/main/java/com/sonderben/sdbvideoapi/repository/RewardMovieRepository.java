@@ -1,9 +1,9 @@
 package com.sonderben.sdbvideoapi.repository;
 
-import com.sonderben.sdbvideoapi.entity.RewardMovie;
+import com.sonderben.sdbvideoapi.entity.Reward;
 import org.springframework.stereotype.Repository;
-import com.sonderben.sdbvideoapi.entity.RewardMovie;
+
 
 @Repository
-public interface RewardMovieRepository extends BaseRepository<RewardMovie,Long> {
+public interface RewardMovieRepository extends BaseRepository<Reward,Long> {
 }

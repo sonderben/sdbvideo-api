@@ -1,7 +1,9 @@
 package com.sonderben.sdbvideoapi.entity;
 
 import com.sonderben.sdbvideoapi.entity.base.BaseHistoric;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
@@ -11,6 +13,7 @@ import java.util.Calendar;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class  MyList extends BaseHistoric implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     Calendar dateAdded;

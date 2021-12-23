@@ -54,4 +54,10 @@ public class AdministratorController {
         LoginResponseAdministratorDTO loginResponseDTO= service.login(request);
         return new ResponseEntity<>(loginResponseDTO,HttpStatus.OK);
     }
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Administrator> update(@PathVariable Long id,@RequestBody Administrator request){
+        Administrator administrator= service.update(request, id);
+        return new ResponseEntity<>(administrator,HttpStatus.OK);
+    }
 }

@@ -3,9 +3,9 @@ package com.sonderben.sdbvideoapi.security;
 import com.sonderben.sdbvideoapi.entity.Client;
 import com.sonderben.sdbvideoapi.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class TokenAuthenticationFilter extends OncePerRequestFilter {
-    @Autowired
+public class TokenAuthenticationFilter/* extends OncePerRequestFilter*/ {
+  /*  @Autowired
     private ClientService clientService;
 
 
@@ -33,8 +33,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                System.err.println(getClass()+": m anndan if");
             }
-        }catch (Exception e){}
+            System.err.println(getClass()+": m la deyo");
+        }catch (Exception e){
+            System.err.println(e);
+        }
         filterChain.doFilter(request,response);
     }
     private String getSubjectJwtFromRequest(HttpServletRequest request){
@@ -43,5 +47,5 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
-    }
+    }*/
 }

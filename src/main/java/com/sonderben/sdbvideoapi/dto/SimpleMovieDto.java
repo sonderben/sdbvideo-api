@@ -1,7 +1,6 @@
 package com.sonderben.sdbvideoapi.dto;
 
-import com.sonderben.sdbvideoapi.entity.TitleSynopsisMovie;
-import com.sonderben.sdbvideoapi.entity.base.BaseVideo;
+import com.sonderben.sdbvideoapi.entity.TitleSynopsis;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +11,7 @@ import java.util.Set;
 public class SimpleMovieDto extends Dto {
 
     private Long id;
-    private Set<TitleSynopsisMovie> title;
+    private Set<TitleSynopsis> title;
     private Calendar releaseDate;
     private String posterUrlMovie;
     private String trailerUrlMovie;

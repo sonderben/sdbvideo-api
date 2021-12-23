@@ -3,6 +3,7 @@ package com.sonderben.sdbvideoapi.service;
 import com.sonderben.sdbvideoapi.Utiles.Converter;
 import com.sonderben.sdbvideoapi.dto.Dto;
 import com.sonderben.sdbvideoapi.entity.Movie;
+import com.sonderben.sdbvideoapi.exception.NoDataFoundException;
 import com.sonderben.sdbvideoapi.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,12 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
         }
         return movieDaoList;
     }
+    public List<Movie> findAllAdmin(){
+        return repository.findAll();
+    }
+    public Movie findById(Long id){
+        return repository.findById(id).orElseThrow(()->new NoDataFoundException("no movie found with this id: "+id));
+    }
 
 
     public Dto findById(Long idMovie,Long idProfile,boolean simple) {
@@ -64,9 +71,7 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
 
 
     public Movie update(Movie entity,Long id)  {
-        Movie entityFind=repository.findById(id).orElse(null);
-        if(entityFind!=null)
-            repository.save(entity);
-        return  entityFind;
+        repository.findById(id).orElseThrow(()->new NoDataFoundException("don't exist movie with this id: "+id));
+            return repository.save(entity);
     }
 }

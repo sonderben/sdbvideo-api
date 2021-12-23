@@ -11,5 +11,6 @@ import java.util.Calendar;
 public class MyListDto extends Dto{
     Long id_profile;
     Dto movie;
+    Dto serie;
     Calendar dateAdded;
 }

@@ -2,20 +2,16 @@ package com.sonderben.sdbvideoapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sonderben.sdbvideoapi.entity.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+/*import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetails;*/
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "CLIENTS")
@@ -23,8 +19,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Client extends BaseEntity implements UserDetails,Serializable {
-    @Column(unique = true)
+@Builder
+public class Client extends BaseEntity implements /*UserDetails,*/Serializable {
+    @Column(unique = true,nullable = false)
     String email;
     @Column(length = 50)
     String firstName;
@@ -33,6 +30,8 @@ public class Client extends BaseEntity implements UserDetails,Serializable {
     @Temporal(TemporalType.DATE)
     Calendar birthday;
     @Column(length = 11)
+    @Pattern(regexp = "^(\\d{10})|(([\\(]?([0-9]{3})[\\)]?)?[ \\.\\-]?([0-9]{3})[ \\.\\-]([0-9]{4}))$"
+            ,message = "Bad cel number")
     String telephone;
     @Column(length = 50)
     String country;
@@ -46,15 +45,19 @@ public class Client extends BaseEntity implements UserDetails,Serializable {
     String postalCode;
     String password;
     @Temporal(TemporalType.TIMESTAMP)
+   //@Column(insertable = false,updatable = false)
     Calendar dateClientCreate;
     @OneToOne
     TypeAccess access;
+    @Column(columnDefinition = "boolean default false",insertable = false)
     Boolean allProfilesCanCreateNewProfile;
     @JsonIgnore
     @OneToMany(mappedBy = "client",cascade = {CascadeType.REMOVE})
     List<Profile> profileList;
 
-    @Override
+
+
+   /* @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections
                 .singletonList(new SimpleGrantedAuthority("ROLE_USER"));
@@ -87,5 +90,5 @@ public class Client extends BaseEntity implements UserDetails,Serializable {
     @Override
     public String getPassword() {
         return password;
-    }
+    }*/
 }

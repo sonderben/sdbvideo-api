@@ -9,14 +9,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-@Table(name = "TITLES_SYNOPSIS_MOVIES")
+@Table(name = "TITLES_SYNOPSIS")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 
-public class TitleSynopsisMovie extends BaseEntity implements Serializable {
+public class TitleSynopsis extends BaseEntity implements Serializable {
     @Column(length = 50)
     String title;
     @Column(length = 3) //iso 639-2

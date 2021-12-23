@@ -46,11 +46,9 @@ public abstract class BaseServiceImpl<ENTITY extends BaseEntity,ID extends Seria
 
     @Override
     public ENTITY update(ENTITY entity,ID id)  {
-        ENTITY entityFind=repository.findById(id).orElseThrow(()->new BadRequestException("Id don t exist"));
-        ENTITY update=repository.save( entityFind);
-
-            repository.save(entity);
-            return  update;
-
+        /*ENTITY entityFind=*/repository.findById(id).orElseThrow(()->new BadRequestException("Id don t exist"));
+       // ENTITY update=repository.save( entityFind);
+            //repository.save(entity);
+            return  repository.save(entity);
     }
 }

@@ -1,6 +1,7 @@
 package com.sonderben.sdbvideoapi.service;
 
 import com.sonderben.sdbvideoapi.Utiles.Converter;
+import com.sonderben.sdbvideoapi.Utiles.Utile;
 import com.sonderben.sdbvideoapi.dto.LoginRequestDTO;
 import com.sonderben.sdbvideoapi.dto.LoginResponseDTO;
 import com.sonderben.sdbvideoapi.entity.Client;
@@ -19,8 +20,8 @@ import java.util.List;
 public class ClientService  {
     @Autowired
     ClientRepository repository;
-    @Value("${jwt.key}")
-    String KEY;
+   // @Value("${jwt.key}")
+    String KEY="awed8kfSdDSa8!m";
 
     public int getNumberOfScreenByIdClient(Long id){
         return repository.getNumberOfScreenByIdClient(id);
@@ -48,17 +49,17 @@ public class ClientService  {
         Client entityFind=repository.findById(id).orElse(null);
         if(entityFind!=null)
          return    repository.save(entity);
-        return  null;
+        throw new BadRequestException("Client with "+id+" don't exist");
     }
 
     public Boolean isAllProfilesCanCreateNewProfile(Long profileId){
         return  repository.isAllProfilesCanCreateNewProfile(profileId);
     }
     public LoginResponseDTO login(LoginRequestDTO request){
-        System.out.println("email: "+request.getEmail()+"\npassword: "+request.getPassword());
+
         Client client= repository.findClientByEmailAndPassword(request.getEmail(), request.getPassword());
        if(client!=null)
-        return Converter.convert(client,createToken(client));
+        return Converter.convert(client, Utile.createToken(client.getEmail()));
        else
            throw new BadRequestException("wrong password or wrong email");
     }
@@ -66,7 +67,7 @@ public class ClientService  {
         return repository.getClientByProfileId(profileId);
     }
 
-    public String createToken(Client requestDTO){
+    /*public String createToken(Client requestDTO){
         Date init=new Date();
         Date end=new Date(init.getTime()+1_000*60*60*24);
         return Jwts.builder()
@@ -75,7 +76,7 @@ public class ClientService  {
                 .setExpiration(end)
                 .signWith(SignatureAlgorithm.HS512,KEY)
                 .compact();
-    }
+    }*/
     public String getClientEmailFromToken(String jwt) {
         try {
             return Jwts.parser().setSigningKey(KEY).parseClaimsJws(jwt).getBody().getSubject();

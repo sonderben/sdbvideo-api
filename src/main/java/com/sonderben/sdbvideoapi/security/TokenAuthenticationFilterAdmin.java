@@ -3,9 +3,9 @@ package com.sonderben.sdbvideoapi.security;
 import com.sonderben.sdbvideoapi.entity.Administrator;
 import com.sonderben.sdbvideoapi.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class TokenAuthenticationFilterAdmin extends OncePerRequestFilter {
-    @Autowired
+public class TokenAuthenticationFilterAdmin /*extends OncePerRequestFilter */{
+   /* @Autowired
     private AdministratorService administratorService;
 
 
@@ -43,5 +43,5 @@ public class TokenAuthenticationFilterAdmin extends OncePerRequestFilter {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
-    }
+    }*/
 }

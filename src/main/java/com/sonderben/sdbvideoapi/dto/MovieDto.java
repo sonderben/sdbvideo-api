@@ -17,7 +17,7 @@ public class MovieDto extends Dto{
     Integer ageCategory;
     Integer numView;*/
     String access;
-    Set<TitleSynopsisMovie> titlesSynopsis;
+    Set<TitleSynopsis> titlesSynopsis;
     float average;
     Calendar availability;
     String urlMovie;
@@ -25,7 +25,7 @@ public class MovieDto extends Dto{
     String posterUrlMovie;
     String trailerUrlMovie;
     Integer duration;
-    Set<RewardMovie>rewardList;
+    Set<Reward>rewardList;
     Set<Actor>actorList;
     Set<Category>categoryList;
     Set<MovieSubtitle> movieSubtitleList;
