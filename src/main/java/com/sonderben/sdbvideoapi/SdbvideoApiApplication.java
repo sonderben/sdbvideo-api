@@ -22,7 +22,7 @@ public class SdbvideoApiApplication {
 		SpringApplication.run(SdbvideoApiApplication.class, args);
 
 
-		String to=Utile.createToken("q@gmail.com","android");
+		//String to=Utile.createToken("q@gmail.com","android");
 		//Utile.validateToken(to);
 
 

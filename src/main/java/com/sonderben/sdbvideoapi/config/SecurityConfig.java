@@ -40,12 +40,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-
                         "/*/sign_up",
                         "/*/login"
                 ).permitAll()
                 .antMatchers(HttpMethod.GET,"/category").hasAnyRole("USER","ADMIN")
-                .mvcMatchers(HttpMethod.GET,"/movie/all/**","/movie/search/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/episode","season").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.GET,"/movie/all/**","/movie/search/**",
+                        "/season/**","/episode/**").hasAnyRole("USER","ADMIN")
+                .mvcMatchers(HttpMethod.POST,"/historic").hasRole("USER")
+                .mvcMatchers(HttpMethod.PUT,"/historic").hasRole("USER")
+                .mvcMatchers(HttpMethod.DELETE,"/historic/*").hasRole("USER")
+                .mvcMatchers(HttpMethod.GET,"/historic/search_by/**").hasRole("USER")
+
+                .mvcMatchers(HttpMethod.POST,"/my_list").hasRole("USER")
+                .mvcMatchers(HttpMethod.PUT,"/my_list").hasRole("USER")
+                .mvcMatchers(HttpMethod.DELETE,"/my_list/*").hasRole("USER")
+                .mvcMatchers(HttpMethod.GET,"/my_list/search_by/**").hasRole("USER")
                 .anyRequest().hasRole("ADMIN");
                 //.authenticated();
 

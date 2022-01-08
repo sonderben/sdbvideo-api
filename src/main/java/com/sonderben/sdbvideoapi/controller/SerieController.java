@@ -30,9 +30,9 @@ public class SerieController  {
     @Transactional
     public ResponseEntity<List<SimpleSerieDto>> getSerieByCategory(
             @RequestParam Long profileId,
-            @RequestParam String description,
+            @RequestParam String category,
             @RequestParam(required = false,defaultValue = "0") int pageNumber){
-        return   new ResponseEntity<>(service.getSeriesByDescription(profileId,description,pageNumber), HttpStatus.OK);
+        return   new ResponseEntity<>(service.getSeriesByDescription(profileId,category,pageNumber), HttpStatus.OK);
     }
     @GetMapping("/admin")
     @Transactional

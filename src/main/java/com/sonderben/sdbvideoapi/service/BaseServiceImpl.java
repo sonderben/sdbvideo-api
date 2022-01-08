@@ -38,8 +38,7 @@ public abstract class BaseServiceImpl<ENTITY extends BaseEntity,ID extends Seria
 
     @Override
     public ENTITY delete(ID id)  {
-        ENTITY entity=repository.findById(id).orElse(null);
-        if(entity!=null)
+        ENTITY entity=repository.findById(id).orElseThrow(()->new NoDataFoundException("entity don't exist"));
             repository.delete(entity);
         return entity;
     }
