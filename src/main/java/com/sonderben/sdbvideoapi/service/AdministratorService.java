@@ -8,7 +8,7 @@ import com.sonderben.sdbvideoapi.entity.Administrator;
 import com.sonderben.sdbvideoapi.exception.BadRequestException;
 import com.sonderben.sdbvideoapi.exception.NoDataFoundException;
 import com.sonderben.sdbvideoapi.repository.AdministratorRepository;
-import io.jsonwebtoken.*;
+//import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -56,7 +56,7 @@ public class AdministratorService {
 
         Administrator client = repository.findAdministratorByEmailAndPassword(request.getEmail(), request.getPassword());
         if (client != null)
-            return Converter.convert(client, Utile.createToken(client.getEmail()));
+            return Converter.convert(client, Utile.createToken( client.getEmail(),"ROLE_ADMIN" ) );
         else
             throw new BadRequestException("wrong password or wrong email");
     }
@@ -75,7 +75,7 @@ public class AdministratorService {
         return jwt;
     }*/
 
-    public String getClientEmailFromToken(String jwt) {
+    /*public String getClientEmailFromToken(String jwt) {
         try {
             return Jwts.parser().setSigningKey(KEY).parseClaimsJws(jwt).getBody().getSubject();
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class AdministratorService {
             //throw new ValidateServiceException("Invalid Token");
         }
         return null;
-    }
+    }*/
 
     public Administrator findByClientEmail(String email) {
         Administrator client = repository.findAdministratorByEmail(email);
@@ -93,19 +93,5 @@ public class AdministratorService {
             throw new NoDataFoundException("email don't exist");
     }
 
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(KEY).parseClaimsJws(token);
-            return true;
-        } catch (UnsupportedJwtException e) {
-            //log.error("JWT in a particular format/configuration that does not match the format expected");
-        } catch (MalformedJwtException e) {
-            //log.error(" JWT was not correctly constructed and should be rejected");
-        }/*catch (SignatureException4 e) {
-            //log.error("Signature or verifying an existing signature of a JWT failed");
-        }*/ catch (ExpiredJwtException e) {
-            //log.error("JWT was accepted after it expired and must be rejected");
-        }
-        return true;
-    }
+
 }

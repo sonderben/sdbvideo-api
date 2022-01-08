@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-/*import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;*/
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Administrator extends BaseEntity /*implements UserDetails,*/implements Serializable {
+public class Administrator extends BaseEntity implements UserDetails, Serializable {
     @Column(nullable = false)
     @Size(min = 3,message = "Bad full name, size must be greater than 3")
     String fullName;
@@ -40,8 +40,8 @@ public class Administrator extends BaseEntity /*implements UserDetails,*/impleme
     @Size(min = 3,message = "Bad password, size must be greater than 3")
     String password;
 
-    //@Override
-   /* public Collection<? extends GrantedAuthority> getAuthorities() {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
@@ -73,5 +73,5 @@ public class Administrator extends BaseEntity /*implements UserDetails,*/impleme
     @Override
     public boolean isEnabled() {
         return true;
-    }*/
+    }
 }

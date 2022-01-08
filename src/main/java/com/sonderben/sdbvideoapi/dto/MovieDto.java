@@ -10,12 +10,8 @@ import java.util.Set;
 
 @Builder
 @Getter
-public class MovieDto extends Dto{
+public class MovieDto extends Dto {
     Long id;
-   /* Integer positiveVote;
-    Integer negativeVote;
-    Integer ageCategory;
-    Integer numView;*/
     String access;
     Set<TitleSynopsis> titlesSynopsis;
     float average;
@@ -25,13 +21,15 @@ public class MovieDto extends Dto{
     String posterUrlMovie;
     String trailerUrlMovie;
     Integer duration;
-    Set<Reward>rewardList;
-    Set<Actor>actorList;
-    Set<Category>categoryList;
+    Set<Reward> rewardList;
+    Set<Actor> actorList;
+    Set<Category> categoryList;
     Set<MovieSubtitle> movieSubtitleList;
-    /*
+    Long currentPlayingTime;
+
+    public void setCurrentPlayingTime(Long currentPlayingTime){
+        this.currentPlayingTime=currentPlayingTime;
+    }
 
 
-
-     */
 }

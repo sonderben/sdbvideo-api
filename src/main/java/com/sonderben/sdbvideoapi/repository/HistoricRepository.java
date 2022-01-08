@@ -14,11 +14,11 @@ public interface HistoricRepository extends BaseRepository<Historic,Long>{
             "WHERE profile_id = ?1" +
             " ORDER BY date_last_visited DESC " +
             "LIMIT 25 OFFSET ?2",nativeQuery = true)
-    List<Historic> findByProfileOrderByDateLastVisited(int idUser,int pageNumber);
+    List<Historic> findByProfileOrderByDateLastVisited(int idProfile,int pageNumber);
 
     @Query(value = "select   EXISTS (select 1 from historic " +
-            " where profile_id= ?1 and movie_id= CAST(CAST(?3 AS TEXT) AS BIGINT) or serie_id= CAST(CAST(?2 AS TEXT) AS BIGINT))",nativeQuery = true)
-    Boolean alreadyExist(Long idProfile,Long id_serie,Long id_movie);
+            " where profile_id= ?1 and movie_id= CAST(CAST(?3 AS TEXT) AS BIGINT) or episode_id= CAST(CAST(?2 AS TEXT) AS BIGINT))",nativeQuery = true)
+    Boolean alreadyExist(Long idProfile,Long idEpisode,Long idMovie);
 
 
 }

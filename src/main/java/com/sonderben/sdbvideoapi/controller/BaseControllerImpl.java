@@ -39,12 +39,12 @@ public abstract class BaseControllerImpl<ENTITY extends BaseEntity, S extends Ba
     @PostMapping("")
     @Transactional
     public ResponseEntity<ENTITY> save(@RequestBody @Valid ENTITY entity) {
-        if(entity instanceof Movie){
+        /*if(entity instanceof Movie){
             Movie movie= (Movie) entity;
             if(movie.getDescription()==null)
                 movie.setDescription(Utile.createDescriptionMovie(movie));
             System.out.println(movie.getDescription());
-        }
+        }*/
 
         ENTITY entitySave= service.save(entity);
 

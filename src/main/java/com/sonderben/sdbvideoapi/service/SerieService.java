@@ -3,7 +3,6 @@ package com.sonderben.sdbvideoapi.service;
 import com.sonderben.sdbvideoapi.Utiles.Converter;
 import com.sonderben.sdbvideoapi.dto.Dto;
 import com.sonderben.sdbvideoapi.dto.SimpleSerieDto;
-import com.sonderben.sdbvideoapi.entity.Movie;
 import com.sonderben.sdbvideoapi.entity.Serie;
 import com.sonderben.sdbvideoapi.exception.BadRequestException;
 import com.sonderben.sdbvideoapi.exception.NoDataFoundException;
@@ -21,6 +20,7 @@ public class SerieService /*extends BaseServiceImpl<Serie,Long>*/{
     SerieRepository serieRepository;
     public List<SimpleSerieDto> getSeriesByDescription(Long idProfile,String description,int pageNumber){
         List<Serie>series=serieRepository.getSerieByDescription( idProfile, description, pageNumber);
+       List<SimpleSerieDto>serieDtos= Converter.convert(series);
         return Converter.convert(series);
     }
 
@@ -30,11 +30,6 @@ public class SerieService /*extends BaseServiceImpl<Serie,Long>*/{
     }
 
     public List<Serie> findAllAdm(){
-       /* List<Dto> movieDaoList=new ArrayList<>();
-        List<Serie> movies= serieRepository.findAll();
-        for (int i = 0; i < movies.size(); i++) {
-            movieDaoList.add(Converter.convert(movies.get(i)));
-        }*/
         return serieRepository.findAll();
     }
     public List<Dto> findAllClient( Long profileId, int pageNumber){
@@ -56,13 +51,7 @@ public class SerieService /*extends BaseServiceImpl<Serie,Long>*/{
         }
         throw new NoDataFoundException("serie don't exist");
     }
-    /*public Serie update(Serie entity,Long id)  {
-        Serie entityFind=serieRepository.findById(id).orElse(null);
-        if(entityFind!=null)
-            return serieRepository.save(entity);
 
-        throw new NoDataFoundException("serie don't exist");
-    }*/
     public Serie post(Serie entity)  {
         Serie serie=serieRepository.save(entity);
         return serie;

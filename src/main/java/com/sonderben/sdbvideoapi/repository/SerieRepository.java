@@ -50,7 +50,8 @@ public interface SerieRepository extends BaseRepository<Serie,Long> {
             "join type_access on " +
             "type_access.id=clients.access_id " +
             "where clients.id= (select client_id from profiles where profiles.id=?1) ) " +
-            "And movies.age_category<=(select age_category from profiles where profiles.id=?1) " +
+            "And series.age_category<=(select age_category from profiles where profiles.id=?1) " +
             "LIMIT 25 OFFSET ?2",nativeQuery = true)
     List<Serie> getAllSeries(Long idProfile, int pageNumber);
+
 }

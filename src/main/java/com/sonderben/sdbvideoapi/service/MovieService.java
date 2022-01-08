@@ -2,7 +2,10 @@ package com.sonderben.sdbvideoapi.service;
 
 import com.sonderben.sdbvideoapi.Utiles.Converter;
 import com.sonderben.sdbvideoapi.dto.Dto;
+import com.sonderben.sdbvideoapi.dto.MovieDto;
+import com.sonderben.sdbvideoapi.dto.SimpleMovieDto;
 import com.sonderben.sdbvideoapi.entity.Movie;
+import com.sonderben.sdbvideoapi.exception.BadRequestException;
 import com.sonderben.sdbvideoapi.exception.NoDataFoundException;
 import com.sonderben.sdbvideoapi.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,9 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
         List<Movie>movieList=repository.getMovieByCategory(categoryId,profileId,pageNumber);
         List<Dto> movieDaoList=new ArrayList<>();
         for (int i = 0; i < movieList.size(); i++) {
-            movieDaoList.add(Converter.convert(movieList.get(i),true));
+           MovieDto a=(MovieDto) Converter.convert(movieList.get(i),true);
+           a.setCurrentPlayingTime(repository.getCurrentPlayingTime(profileId,movieList.get(i).getId()));
+            movieDaoList.add(a);
         }
         return movieDaoList;
     }
@@ -29,17 +34,39 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
         List<Movie>movieList=repository.getMovieByDescription(idProfile,description,pageNumber);
         List<Dto> movieDaoList=new ArrayList<>();
         for (int i = 0; i < movieList.size(); i++) {
-            movieDaoList.add(Converter.convert(movieList.get(i),true));
+            setCurrentPlayingTime( idProfile, movieList.get(i),movieDaoList,true);
         }
         return movieDaoList;
     }
     ////////////
+    public void   setCurrentPlayingTime(Long idProfile,Movie movie,List<Dto> movieDaoList,boolean simple){
+        //List<Dto> movieDaoList=new ArrayList<>();
+        Dto dto=Converter.convert(movie,simple);
+        SimpleMovieDto simpleMovieDto=null;
+        MovieDto movieDto=null;
+        Long currentPlayingTime=repository.getCurrentPlayingTime(idProfile, movie.getId());
 
-    public List<Dto> findAll(boolean simple,Long profileId, int pageNumber){
+        if(dto instanceof SimpleMovieDto)
+            simpleMovieDto=(SimpleMovieDto) dto;
+        else
+            movieDto=(MovieDto) dto;
+        if(simpleMovieDto!=null) {
+            simpleMovieDto.setCurrentPlayingTime( currentPlayingTime==null?0L:currentPlayingTime );
+            movieDaoList.add(simpleMovieDto);
+        }
+        else {
+            movieDto.setCurrentPlayingTime( currentPlayingTime==null?0L:currentPlayingTime );
+            movieDaoList.add(movieDto);
+        }
+
+    }
+
+    public List<Dto> findAll(/*boolean simple,*/Long profileId, int pageNumber){
         List<Dto> movieDaoList=new ArrayList<>();
-        List<Movie> movies=repository.getAllMovies(profileId,pageNumber);
-        for (int i = 0; i < movies.size(); i++) {
-            movieDaoList.add(Converter.convert(movies.get(i),simple));
+        List<Movie> movieList=repository.getAllMovies(profileId,pageNumber);
+
+        for (int i = 0; i < movieList.size(); i++) {
+            setCurrentPlayingTime( profileId, movieList.get(i),movieDaoList,true);
         }
         return movieDaoList;
     }
@@ -52,8 +79,18 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
 
 
     public Dto findById(Long idMovie,Long idProfile,boolean simple) {
-
-        return Converter.convert(repository.getMovieById(idMovie,idProfile),simple);
+        SimpleMovieDto simpleMovieDto=null;
+        MovieDto movieDto=null;
+        Dto a=Converter.convert(repository.getMovieById(idMovie,idProfile),simple);
+        if(a instanceof SimpleMovieDto) {
+            simpleMovieDto = (SimpleMovieDto) a;
+            simpleMovieDto.setCurrentPlayingTime(repository.getCurrentPlayingTime(idProfile, idMovie));
+            return simpleMovieDto;
+        }else {
+            movieDto=(MovieDto) a;
+            movieDto.setCurrentPlayingTime(repository.getCurrentPlayingTime(idProfile, idMovie));
+            return movieDto;
+        }
     }
 
 
@@ -63,15 +100,17 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
 
 
     public Movie delete(Long id)  {
-        Movie entity=repository.findById(id).orElse(null);
-        if(entity!=null)
+        Movie entity=repository.findById(id).orElseThrow(()->new BadRequestException("don't exist movie with this id: "+id));
             repository.delete(entity);
-        return entity;
+            return entity;
+
     }
 
 
     public Movie update(Movie entity,Long id)  {
         repository.findById(id).orElseThrow(()->new NoDataFoundException("don't exist movie with this id: "+id));
-            return repository.save(entity);
+        if(entity.getId()!=id)
+            throw new BadRequestException("id passed in parameter: "+id+" does not match egual with id of the movie: "+entity.getId());
+        return repository.save(entity);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Set;
 @Table(name = "EPISODES")
 public class Episode extends BaseEntity {
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    List<TitleSynopsis>titleSynopses;
+    Set<TitleSynopsis>titleSynopses;
     String skipIntro;//[12,34]
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     Set<EpisodeSubtitle> subtitles;

@@ -79,6 +79,10 @@ public interface MovieRepository extends BaseRepository<Movie,Long>{
             "LIMIT 25 OFFSET ?2",nativeQuery = true)
     List<Movie> getAllMoviesByDescription2(int UserAgeProfile, int pageNumber,String description);
 
+    @Query(value = "select current_playing_time from historic where profile_id= ?1 and movie_id= ?2 "
+            ,nativeQuery = true)
+    Long getCurrentPlayingTime( Long idProfile,Long idMovie);
+
 
 
 }

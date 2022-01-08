@@ -44,14 +44,15 @@ public class HistoricService extends BaseServiceImpl<Historic, Long> {
             new HistoryValidator().validateInsert(historicDto);
             //System.out.println("post historic");
 
-            Long idSerie=historicDto.getSerie()==null?null:historicDto.getSerie().getId();
+            Long idSerie=historicDto.getEpisode()==null?null:historicDto.getEpisode().getId();
             Long idMovie=historicDto.getMovie()==null?null:historicDto.getMovie().getId();
 
             if ( !repository.alreadyExist(historicDto.getProfile().getId(), idSerie, idMovie) ) {
                 newHistoric.setCurrentPlayingTime(historicDto.getCurrentPlayingTime());
                 newHistoric.setDateLastVisited(Calendar.getInstance());
                 newHistoric.setMovie(historicDto.getMovie());
-                newHistoric.setSerie(historicDto.getSerie());
+               // newHistoric.setSerie(historicDto.getSerie());
+                newHistoric.setEpisode(historicDto.getEpisode());
                 newHistoric.setProfile(historicDto.getProfile());
                 return repository.save(newHistoric);
             } else
@@ -63,7 +64,7 @@ public class HistoricService extends BaseServiceImpl<Historic, Long> {
             newHistoric.setCurrentPlayingTime(historicDto.getCurrentPlayingTime());
             newHistoric.setDateLastVisited(Calendar.getInstance());
             newHistoric.setMovie(historic.getMovie());
-            newHistoric.setSerie(historic.getSerie());
+            newHistoric.setEpisode(historicDto.getEpisode());
             newHistoric.setProfile(historicDto.getProfile());
             return repository.save(newHistoric);
         }

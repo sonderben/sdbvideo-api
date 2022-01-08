@@ -16,5 +16,10 @@ public class SimpleMovieDto extends Dto {
     private String posterUrlMovie;
     private String trailerUrlMovie;
     private Integer duration;
+    Long currentPlayingTime;
+
+    public void setCurrentPlayingTime(Long currentPlayingTime){
+        this.currentPlayingTime=currentPlayingTime;
+    }
 
 }

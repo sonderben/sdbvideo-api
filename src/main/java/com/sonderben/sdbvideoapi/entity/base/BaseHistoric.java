@@ -30,8 +30,7 @@ public class BaseHistoric extends BaseEntity implements Serializable {
     Profile profile;
     @OneToOne
     Movie movie;
-    @OneToOne
-    Serie serie;
+
     @JsonProperty(value = "profile",required = true)////
     private void unpackNested2(Long profile){
         Profile profile1=new Profile();

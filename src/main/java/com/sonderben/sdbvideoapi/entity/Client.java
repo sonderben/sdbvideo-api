@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sonderben.sdbvideoapi.entity.base.BaseEntity;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-/*import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;*/
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -20,7 +20,7 @@ import java.util.*;
 @Getter
 @Setter
 @Builder
-public class Client extends BaseEntity implements /*UserDetails,*/Serializable {
+public class Client extends BaseEntity implements UserDetails,Serializable {
     @Column(unique = true,nullable = false)
     String email;
     @Column(length = 50)
@@ -57,7 +57,7 @@ public class Client extends BaseEntity implements /*UserDetails,*/Serializable {
 
 
 
-   /* @Override
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections
                 .singletonList(new SimpleGrantedAuthority("ROLE_USER"));
@@ -90,5 +90,5 @@ public class Client extends BaseEntity implements /*UserDetails,*/Serializable {
     @Override
     public String getPassword() {
         return password;
-    }*/
+    }
 }

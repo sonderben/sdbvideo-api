@@ -17,7 +17,7 @@ public class Converter {
                     .id(historic.getId())
                     .id_profile(historic.getProfile().getId())
                     .movie(convert(historic.getMovie(),simple))
-                    .serie(convert(historic.getSerie()))
+                    .episode(convert(historic.getEpisode()))
                     .currentPlayingTime(historic.getCurrentPlayingTime())
                     .dateLastVisited(historic.getDateLastVisited())
                     .build();
@@ -302,5 +302,39 @@ public class Converter {
         }
         else
             return null;
+    }
+    public static Dto convert(Episode epo){
+        return EpisodeDto.builder()
+                .duration(epo.getDuration())
+                .id(epo.getId())
+                .subtitles(epo.getSubtitles())
+                .titleSynopses(epo.getTitleSynopses())
+                .url(epo.getUrl())
+                .poster(epo.getPoster())
+                .build();
+    }
+
+    public static Set<EpisodeDto> convertToEpisodeDto(Season season){
+        Set<Episode>episodeSet=season.getEpisodes();
+        Set<EpisodeDto> episodeDtoSet=new HashSet<>();
+        Iterator<Episode>episodeIterator=episodeSet.iterator();
+        while (episodeIterator.hasNext()){
+            //EpisodeDto episode=( (EpisodeDto) convert( episodeIterator.next() ) );//episodeIterator.next();
+            episodeDtoSet.add( ( (EpisodeDto) convert( episodeIterator.next() ) ) );
+        }
+        return episodeDtoSet;
+    }
+
+    public static SeasonResponseDto convert(Season entity) {
+        return SeasonResponseDto.builder()
+                .episodes(convertToEpisodeDto(entity))
+                .dateAdded(entity.getDateAdded())
+                .id(entity.getId())
+                .release(entity.getRelease())
+                .titleSynopseses(entity.getTitleSynopseses())
+                .poster(entity.getPoster())
+                .trailer(entity.getTrailer())
+                .build();
+
     }
 }

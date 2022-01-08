@@ -43,10 +43,10 @@ public class MovieController {
     //////////////////////////
     @GetMapping("/all")
     @Transactional
-    public ResponseEntity<List<Dto>> getAll(@RequestParam(required = false, defaultValue = "true") boolean simple,
+    public ResponseEntity<List<Dto>> getAll(
                                             @RequestParam Long profileId,
                                             @RequestParam(required = false, defaultValue = "0") int pageNumber) {
-        return new ResponseEntity<List<Dto>>(service.findAll(simple, profileId, pageNumber), HttpStatus.OK);
+        return new ResponseEntity<List<Dto>>(service.findAll( profileId, pageNumber), HttpStatus.OK);
     }
     @GetMapping("/admin")
     @Transactional

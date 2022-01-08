@@ -22,9 +22,9 @@ public class MyListController /*extends BaseControllerImpl<MyList, MyListService
     @Transactional
     ResponseEntity<List<MyListDto>> findByProfileOrderByDateLastVisited
             (@RequestParam int idProfile,
-             @RequestParam (required = false,defaultValue = "0")  int pageNumber,
-             @RequestParam(required = false,defaultValue = "true") boolean simple){
-        return new ResponseEntity<>(service.findByIdProfileOrderByDateAdded(idProfile, pageNumber,simple), HttpStatus.CREATED);
+             @RequestParam (required = false,defaultValue = "0")  int pageNumber/*,
+             @RequestParam(required = false,defaultValue = "true") boolean simple*/){
+        return new ResponseEntity<>(service.findByIdProfileOrderByDateAdded(idProfile, pageNumber,true), HttpStatus.CREATED);
     }
 
     @PostMapping("")

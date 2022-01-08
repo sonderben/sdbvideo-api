@@ -1,21 +1,24 @@
 package com.sonderben.sdbvideoapi.Utiles;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.sonderben.sdbvideoapi.entity.*;
-import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
+import java.util.*;
 
 
 public class Utile {
     //@Value("${jwt.key}")
     static String KEY = "awed8kfSdDSa8!m";
+    static Algorithm algorithm=Algorithm.HMAC256(KEY.getBytes());
 
     public static String createDescriptionMovie(Movie movie) {
         StringBuilder description = new StringBuilder();
@@ -87,34 +90,43 @@ public class Utile {
         return date;
     }
 
-    public static String createToken(String user) {
-        Date init = new Date();
-        Date end = new Date(init.getTime() + 1_000 * 60 * 60);
-        String jwt = Jwts.builder()
-                .setSubject(user)
-                .setIssuedAt(init)
-                .setExpiration(end)
-                .signWith(SignatureAlgorithm.HS512, KEY)
-                .compact();
-        System.err.println(jwt);
-        validateToken(jwt);
-        return jwt;
+    public static String createToken(String user,String role,String idDevice) {
+
+
+
+
+        String a= JWT.create()
+                .withSubject(user)
+                .withIssuer("sonderben")
+                .withExpiresAt(new Date(System.currentTimeMillis()+30*60*100000))
+                .withClaim("device_id",idDevice)
+                .withClaim("role",role)
+                .sign(algorithm);
+        System.err.println("json created: ");
+        System.err.println(a);
+        return a;
+    }
+    public static String createToken(String user,String role) {
+        String a= JWT.create()
+                .withSubject(user)
+                .withIssuer("sonderben")
+                .withExpiresAt(new Date(System.currentTimeMillis()+30*60*100000))
+                .withClaim("role",role)
+                .sign(algorithm);
+        System.err.println("json created: ");
+
+        return a;
     }
 
-    public static boolean validateToken(String token) {
+    public static DecodedJWT validateToken(String token) {
+
         try {
-            Jwts.parser().setSigningKey(KEY).parseClaimsJws(token);
-            System.err.println("everything is ok");
-            return true;
-        } catch (UnsupportedJwtException e) {
-            System.err.println(e);
-        } catch (MalformedJwtException e) {
-            System.err.println(e);
-        } catch (SignatureException e) {
-            System.err.println(e);
-        } catch (ExpiredJwtException e) {
-            System.err.println(e);
+            DecodedJWT a= JWT.require(algorithm).withIssuer("sonderben").build().verify(token);
+            System.err.println("token: verified");
+            return  a;
+        } catch (JWTVerificationException exception){
+            System.err.println(exception.getMessage());
         }
-        return false;
+        return null;
     }
 }

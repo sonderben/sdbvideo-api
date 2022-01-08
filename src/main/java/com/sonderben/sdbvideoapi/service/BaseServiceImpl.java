@@ -28,7 +28,7 @@ public abstract class BaseServiceImpl<ENTITY extends BaseEntity,ID extends Seria
 
     @Override
     public ENTITY findById(ID id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(()->new NoDataFoundException("entity don t exist"));
     }
 
     @Override

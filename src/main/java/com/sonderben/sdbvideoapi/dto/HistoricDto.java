@@ -16,7 +16,7 @@ public class HistoricDto extends Dto implements Serializable {
     Long id;
     Long id_profile;
     Dto movie;
-    Dto serie;
+    Dto episode;
     int currentPlayingTime;
     Calendar dateLastVisited;
 }
