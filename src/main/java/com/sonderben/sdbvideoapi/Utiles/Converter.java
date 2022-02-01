@@ -16,7 +16,7 @@ public class Converter {
             HistoricDto historicDao = HistoricDto.builder()
                     .id(historic.getId())
                     .id_profile(historic.getProfile().getId())
-                    .movie(convert(historic.getMovie(),simple))
+                    .movie(convert(historic.getMovie()))
                     .episode(convert(historic.getEpisode()))
                     .currentPlayingTime(historic.getCurrentPlayingTime())
                     .dateLastVisited(historic.getDateLastVisited())
@@ -31,7 +31,7 @@ public class Converter {
         if(myList!=null) {
             MyListDto myListDto = MyListDto.builder()
                     .id_profile(myList.getProfile().getId())
-                    .movie(convert(myList.getMovie(),simple))
+                    .movie(convert(myList.getMovie()))
                     .dateAdded(myList.getDateAdded())
                     .serie(convert(myList.getSerie()))
                     .build();
@@ -41,10 +41,11 @@ public class Converter {
             return null;
     }
 
-    public static Dto convert(Movie movie, boolean simple){
+    public static SimpleMovieDto convert(Movie movie){
+
         if(movie!=null) {
-            Dto movieDao;
-            if(!simple){
+            SimpleMovieDto movieDao;
+           /* if(!simple){
                  movieDao = MovieDto.builder()
                         .movieSubtitleList(movie.getMovieSubtitles())
                         .access(movie.getAccess().getName())
@@ -61,7 +62,7 @@ public class Converter {
                         .trailerUrlMovie(movie.getTrailer())
                         .urlMovie(movie.getUrl())
                         .build();
-            }else
+            }else*/
                 movieDao= SimpleMovieDto.builder()
                         .id(movie.getId())
                         .duration(movie.getDuration())
@@ -99,40 +100,27 @@ public class Converter {
 
     public static ProfileDto convert(Profile profile){
         List<Long>cat=new ArrayList<>();
+        Iterator<Category> categoryIterator=profile.getCategoryList().iterator();
         if(profile.getCategoryList()!=null)
-        for (int i = 0; i < profile.getCategoryList().size(); i++) {
-            cat.add(profile.getCategoryList().get(i).getId());
-        }
+        //for (int i = 0; i < profile.getCategoryList().size(); i++) {
+            while (categoryIterator.hasNext()){
+            cat.add(categoryIterator.next().getId());
+            }
+        //}
         ProfileDto profileDto=ProfileDto.builder()
                 .ageCategory(profile.getAgeCategory())
                 .id(profile.getId())
                 .isMainProfile(profile.getIsMainProfile())
                 .name(profile.getName())
                 .pin(profile.getPin())
-                .defaultLanguage(profile.getName())
+                .defaultLanguage(profile.getDefaultLanguage())
                 .urlImg(profile.getUrlImg())
                 //.userId(profile.getUser().getId())
                 .categoryList(cat)
                 .build();
         return profileDto;
     }
-    public static LoginResponseDTO convert(Client client,String token){
-        List<Profile>profileList=client.getProfileList();
-        List<ProfileDto>profileDtoList=new ArrayList<>();
-        for (int i = 0; i < profileList.size(); i++) {
-            profileDtoList.add(convert(profileList.get(i)));
-        }
-        ClientDTO userDTO=ClientDTO.builder()
-                .email(client.getEmail())
-                .id(client.getId())
-                .profileList(profileDtoList)
-                .build();
-        LoginResponseDTO loginResponseDTO=LoginResponseDTO.builder()
-                .user(userDTO)
-                .token(token)
-                .build();
-        return loginResponseDTO;
-    }
+
     public static LoginResponseAdministratorDTO convert(Administrator client,String token){
         administratorDTO administratorDTO=com.sonderben.sdbvideoapi.dto.administratorDTO.builder()
                 .fullName(client.getFullName())
@@ -174,11 +162,11 @@ public class Converter {
                 .region(client.getRegion())
                 .telephone(client.getTelephone())
                 .email(client.getEmail())
-                .profileList(client.getProfileList())
+                .mainProfile(client.getProfileList().get(0))
                 .build();
     }
     public static Client convert(ClientRequestDto dto){
-        Calendar calendar = Calendar.getInstance();
+       /* Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Timestamp.from(Instant.now()).getTime());
        // entity.setDateClientCreate(calendar);
 
@@ -192,13 +180,14 @@ public class Converter {
             e.printStackTrace();
         }
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        cal.setTime(date);*/
         return Client.builder()
-                .birthday(cal)
-                .dateClientCreate(calendar)
+                .birthday(dto.getBirthday())
+                .dateClientCreate(Calendar.getInstance())
                 .access(dto.getAccess())
                 .allProfilesCanCreateNewProfile(dto.getAllProfilesCanCreateNewProfile())
                 .city(dto.getCity())
+                .sex(dto.getSex())
                 .country(dto.getCountry())
                 .department(dto.getDepartment())
                 .email(dto.getEmail())

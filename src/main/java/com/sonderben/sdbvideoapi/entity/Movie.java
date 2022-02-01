@@ -1,5 +1,6 @@
 package com.sonderben.sdbvideoapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sonderben.sdbvideoapi.Utiles.Utile;
 import com.sonderben.sdbvideoapi.entity.base.BaseVideo;
@@ -37,7 +38,7 @@ public class Movie extends BaseVideo implements Serializable {
     Calendar availability;
     @Column(nullable = false)
     String url;
-    @Column(length = 200)
+    @Column(length = 300)
     String description;
     @Temporal(TemporalType.DATE)
     Calendar releaseDate;
@@ -76,4 +77,8 @@ public class Movie extends BaseVideo implements Serializable {
 
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<MovieSubtitle> movieSubtitles;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "movie",cascade = CascadeType.REMOVE)
+    Historic historic;
 }

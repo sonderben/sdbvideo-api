@@ -4,6 +4,7 @@ import com.sonderben.sdbvideoapi.security.TokenAuthenticationFilter;
 import com.sonderben.sdbvideoapi.security.TokenAuthenticationFilterAdmin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +20,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public TokenAuthenticationFilter createTokenAuthenticationFilter() {
         return new TokenAuthenticationFilter();
+    }
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(AUTH_WHITELIST);
     }
 
     @Override
@@ -41,12 +53,44 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/*/sign_up",
-                        "/*/login"
+                        "/*/login",
+                        "/*/login/",
+                        "/",
+                        "/error",
+                        "/favicon.ico",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js",
+                        "/**/*.woff2"
                 ).permitAll()
+                .antMatchers(HttpMethod.GET,"/access","/access","/image").permitAll()
+                .antMatchers(HttpMethod.GET,"/client/profiles").hasAnyRole("ADMIN","USER")
+                .antMatchers(HttpMethod.GET,"/client/logout").hasRole("USER")
+                .antMatchers(HttpMethod.GET,"/client/logout/").hasRole("USER")
+                .mvcMatchers(HttpMethod.GET,"/client/sessions**").hasRole("USER")
+                .mvcMatchers(HttpMethod.GET,"/client/sessions/**").hasRole("USER")
+
+                .mvcMatchers(HttpMethod.DELETE,"/client/sessions**").hasRole("USER")
+                .mvcMatchers(HttpMethod.DELETE,"/client/sessions/**").hasRole("USER")
+
+                .mvcMatchers(HttpMethod.DELETE,"/client/session**").hasRole("USER")
+                .mvcMatchers(HttpMethod.DELETE,"/client/session/**").hasRole("USER")
+
                 .antMatchers(HttpMethod.GET,"/category").hasAnyRole("USER","ADMIN")
                 .antMatchers("/episode","season").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.GET,"/movie/all/**","/movie/search/**",
+                .mvcMatchers(HttpMethod.GET,"/movie/all/**","/movie/search/**","/movie/category/**",
                         "/season/**","/episode/**").hasAnyRole("USER","ADMIN")
+                .mvcMatchers(HttpMethod.GET,"/serie*").hasAnyRole("USER","ADMIN")
+                .mvcMatchers(HttpMethod.GET,"/serie/category/**","/serie/search/**").hasAnyRole("USER","ADMIN")
+
+                .antMatchers(HttpMethod.PUT,"/client/*").hasRole("USER")
+                .antMatchers("/profile/").hasRole("ADMIN")
+                .antMatchers("/profile/*").hasRole("USER")
+
                 .mvcMatchers(HttpMethod.POST,"/historic").hasRole("USER")
                 .mvcMatchers(HttpMethod.PUT,"/historic").hasRole("USER")
                 .mvcMatchers(HttpMethod.DELETE,"/historic/*").hasRole("USER")

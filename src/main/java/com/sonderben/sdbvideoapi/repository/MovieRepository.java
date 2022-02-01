@@ -9,30 +9,29 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends BaseRepository<Movie,Long>{
-
+//https://pganalyze.com/blog/full-text-search-django-postgres
 
      @Query(value = "select * from movies " +
-                         "inner join type_access on " +
-                         "type_access.id=movies.access_id " +
-                         "inner join movies_categories on " +
-                         "movies_categories.category_fk=  (select categories.id from movies_categories " +
-                                                    "inner join categories on " +
-                                                    "categories.id=movies_categories.category_fk " +
-                                                    "where categories.code=?1) /**/ " +
-                         "where type_access.code<= ( select type_access.code from users " +
-                                                   "join type_access on " +
-                                                   "type_access.id=users.access_id " +
-                                                   "where users.id= (select user_id from profiles where profiles.id=?2) ) " +
-                         "And movies.age_category<=(select age_category from profiles where profiles.id=?2) " +
-                         "LIMIT 25 OFFSET ?3",nativeQuery = true)
-    List<Movie> getMovieByCategory( Long categoryId,
+             "       inner join type_access on " +
+             "       type_access.id=movies.access_id " +
+             "       inner join movies_categories on " +
+             "       movies_categories.movie_fk=  movies.id " +
+             "       where movies_categories.category_fk= (select categories.id from categories" +
+             "                                              where categories.code=?1) " +
+             "       AND type_access.code<= ( select type_access.code from clients " +
+             "                                join type_access on " +
+             "                                type_access.id=clients.access_id " +
+             "                                where clients.id= (select client_id from profiles where profiles.id=?2) ) " +
+             "       And movies.age_category<=(select age_category from profiles where profiles.id=?2) " +
+             "       LIMIT 25 OFFSET ?3",nativeQuery = true)
+    List<Movie> getMovieByCategory( Long categoryCode,
                                        Long profileId,
                                        int pageNumber);
 
-    @Query(value = "select * from movies " +
+   /* @Query(value = "select * from movies " +
                         "inner join type_access on " +
                         "type_access.id=movies.access_id " +
-                        "where type_access.code<= ( select type_access.code from clients " +
+                        "where type_access.code <= ( select type_access.code from clients " +
                         "join type_access on " +
                         "type_access.id=clients.access_id " +
                         "where clients.id= (select client_id from profiles where profiles.id=?1) ) " +
@@ -40,9 +39,41 @@ public interface MovieRepository extends BaseRepository<Movie,Long>{
                         "@@ to_tsquery('french',?2) " +
                         "And movies.age_category<=(select age_category from profiles where profiles.id=?1) " +
                         "LIMIT 25 OFFSET ?3",nativeQuery = true)
-    List<Movie> getMovieByDescription( Long idProfile,
+    List<Movie> getMovieByDescription_( Long idProfile,
                                        String description,
-                                       int pageNumber);
+                                       int pageNumber);*/
+
+
+
+
+    @Query(value = " select " +
+            "ts_rank( to_tsvector( (?4)\\:\\:regconfig,movies.description), to_tsquery( (?4)\\:\\:regconfig,?2) ) as rank_, " +
+            "  movies.id,movies.age_category,movies.negative_vote,movies.num_view,movies.positive_vote," +
+            "  movies.availability,movies.description,movies.duration,movies.poster, " +
+            "  movies.release_date,movies.trailer,movies.url,movies.access_id from movies " +
+            "  inner join type_access on " +
+            "  type_access.id=movies.access_id " +
+            "  where type_access.code <= ( select type_access.code from clients " +
+            "                            join type_access on " +
+            "                            type_access.id=clients.access_id  " +
+            "                            where clients.id= (select client_id from profiles where profiles.id=?1) ) " +
+            "                           AND to_tsvector( (?4)\\:\\:regconfig,movies.description) " +
+            "                           @@ to_tsquery( (?4)\\:\\:regconfig,?2) " +
+            "                        And movies.age_category<=(select age_category from profiles where profiles.id=?1) " +
+            "                       order by rank_ desc LIMIT 25 OFFSET ?3 ",nativeQuery = true)
+    List<Movie>getMovieByDescription( Long idProfile,
+                                      String description,
+                                      int pageNumber,String language);
+
+
+
+
+
+
+
+
+
+
 
     @Query(value = "select * from movies " +
                         "inner join type_access on " +

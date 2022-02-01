@@ -2,6 +2,7 @@ package com.sonderben.sdbvideoapi.controller;
 
 import com.sonderben.sdbvideoapi.Utiles.Utile;
 import com.sonderben.sdbvideoapi.dto.Dto;
+import com.sonderben.sdbvideoapi.dto.SimpleMovieDto;
 import com.sonderben.sdbvideoapi.entity.Movie;
 import com.sonderben.sdbvideoapi.exception.BadRequestException;
 import com.sonderben.sdbvideoapi.service.MovieService;
@@ -25,26 +26,28 @@ public class MovieController {
 
     @GetMapping("/search")
     public ResponseEntity<List<Dto>> getMovieByDescription(
-            @RequestParam Long profileId,
+            @RequestParam("profile_id") Long profileId,
             @RequestParam String description,
+            @RequestParam(required = false,defaultValue = "english") String language,
             @RequestParam(required = false, defaultValue = "0") int pageNumber) {
-        return new ResponseEntity<List<Dto>>(service.getMovieByDescription(profileId, description, pageNumber), HttpStatus.OK);
+        return new ResponseEntity<List<Dto>>(service.getMovieByDescription(profileId, description, pageNumber,language), HttpStatus.OK);
     }
 
     //
     @GetMapping("/category")
     @Transactional
-    public ResponseEntity<List<Dto>> getMovieByCategory(@RequestParam Long categoryId,
-                                                        @RequestParam Long profileId,
-                                                        @RequestParam(required = false, defaultValue = "0") int pageNumber) {
-        return new ResponseEntity<List<Dto>>(service.getMovieByCategory(categoryId, profileId, pageNumber), HttpStatus.OK);
+    public ResponseEntity<List<SimpleMovieDto>> getMovieByCategory(@RequestParam Long category_code,
+                                                                   @RequestParam("profile_id") Long profileId,
+                                                                   @RequestParam(required = false, defaultValue = "0") int pageNumber) {
+
+        return new ResponseEntity<>(service.getMovieByCategory(category_code, profileId, pageNumber), HttpStatus.OK);
     }
 
     //////////////////////////
     @GetMapping("/all")
     @Transactional
     public ResponseEntity<List<Dto>> getAll(
-                                            @RequestParam Long profileId,
+                                            @RequestParam("profile_id") Long profileId,
                                             @RequestParam(required = false, defaultValue = "0") int pageNumber) {
         return new ResponseEntity<List<Dto>>(service.findAll( profileId, pageNumber), HttpStatus.OK);
     }
@@ -62,7 +65,7 @@ public class MovieController {
     @GetMapping("/{id}")
     @Transactional
     public ResponseEntity<Dto> getOneById(@PathVariable Long id,
-                                          @RequestParam Long profileId,
+                                          @RequestParam("profile_id") Long profileId,
                                           @RequestParam(required = false, defaultValue = "false") boolean simple) {
         Dto entity = service.findById(id, profileId, simple);
         //if(entity!=null)

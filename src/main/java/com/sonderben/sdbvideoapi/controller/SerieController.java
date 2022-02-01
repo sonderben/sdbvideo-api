@@ -21,18 +21,19 @@ public class SerieController  {
     @GetMapping("/search")
     @Transactional
     public ResponseEntity<List<SimpleSerieDto>> geSerieByDescription(
-            @RequestParam Long profileId,
+            @RequestParam(name = "profile_id") Long profileId,
             @RequestParam String description,
             @RequestParam(required = false,defaultValue = "0") int pageNumber){
-        return   new ResponseEntity<>(service.getSeriesByDescription(profileId,description,pageNumber), HttpStatus.OK);
+        return   new ResponseEntity<>(service.getSeriesByDescription(description,profileId,pageNumber), HttpStatus.OK);
     }
+
     @GetMapping("/category")
     @Transactional
     public ResponseEntity<List<SimpleSerieDto>> getSerieByCategory(
-            @RequestParam Long profileId,
-            @RequestParam String category,
+            @RequestParam(name = "profile_id") Long profileId,
+            @RequestParam(name = "category_code") int categoryCode,
             @RequestParam(required = false,defaultValue = "0") int pageNumber){
-        return   new ResponseEntity<>(service.getSeriesByDescription(profileId,category,pageNumber), HttpStatus.OK);
+        return   new ResponseEntity<>(service.getSeriesByCategory(categoryCode,profileId,pageNumber), HttpStatus.OK);
     }
     @GetMapping("/admin")
     @Transactional
@@ -44,10 +45,11 @@ public class SerieController  {
     public ResponseEntity<Serie> findOneAdm(@PathVariable Long id){
         return   new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
+
     @GetMapping("")
     @Transactional
     public ResponseEntity<List<Dto>> findAllClient(
-            @RequestParam Long profileId,
+            @RequestParam(name = "profile_id") Long profileId,
             @RequestParam(required = false,defaultValue = "0") int pageNumber){
         return   new ResponseEntity<>(service.findAllClient(profileId,pageNumber), HttpStatus.OK);
     }

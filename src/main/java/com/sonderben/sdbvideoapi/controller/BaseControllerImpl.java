@@ -54,12 +54,7 @@ public abstract class BaseControllerImpl<ENTITY extends BaseEntity, S extends Ba
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ENTITY> update(@RequestBody ENTITY entity, @PathVariable Long id) {
-        ENTITY entityUpdate= service.update(entity,id);
-
-        if(entityUpdate!=null)
-            return new ResponseEntity<>(entityUpdate,HttpStatus.OK);
-        else
-            throw new BadRequestException("Entity don't exist");
+            return new ResponseEntity<>(service.update(entity,id),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

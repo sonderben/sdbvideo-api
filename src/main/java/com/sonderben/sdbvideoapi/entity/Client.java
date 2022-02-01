@@ -30,8 +30,8 @@ public class Client extends BaseEntity implements UserDetails,Serializable {
     @Temporal(TemporalType.DATE)
     Calendar birthday;
     @Column(length = 11)
-    @Pattern(regexp = "^(\\d{10})|(([\\(]?([0-9]{3})[\\)]?)?[ \\.\\-]?([0-9]{3})[ \\.\\-]([0-9]{4}))$"
-            ,message = "Bad cel number")
+    /*@Pattern(regexp = "^(\\d{10})|(([\\(]?([0-9]{3})[\\)]?)?[ \\.\\-]?([0-9]{3})[ \\.\\-]([0-9]{4}))$"
+            ,message = "Bad cel number")*/
     String telephone;
     @Column(length = 50)
     String country;
@@ -44,6 +44,7 @@ public class Client extends BaseEntity implements UserDetails,Serializable {
     @Column(length = 16)
     String postalCode;
     String password;
+    String sex;
     @Temporal(TemporalType.TIMESTAMP)
    //@Column(insertable = false,updatable = false)
     Calendar dateClientCreate;

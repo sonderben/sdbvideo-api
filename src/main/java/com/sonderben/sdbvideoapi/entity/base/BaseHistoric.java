@@ -28,6 +28,7 @@ public class BaseHistoric extends BaseEntity implements Serializable {
     @OneToOne//(fetch = FetchType.LAZY)
     @JsonIgnore
     Profile profile;
+
     @OneToOne
     Movie movie;
 

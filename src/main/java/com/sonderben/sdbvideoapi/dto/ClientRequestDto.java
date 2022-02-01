@@ -23,13 +23,16 @@ public class ClientRequestDto {
     @NotBlank(message = "Bad LastName, can not be blank and can not be null")
     @Size(min = 3,message = "Bad LastName, size must be greater than 3")
     String LastName;
-    String birthday; ///1921 10 28
-    @Pattern(regexp = "^(\\d{10})|(([\\(]?([0-9]{3})[\\)]?)?[ \\.\\-]?([0-9]{3})[ \\.\\-]([0-9]{4}))$"
-            ,message = "Bad cel number")
+    //String birthday; ///1921 10 28
+    Calendar birthday;
+   /* @Pattern(regexp = "^(\\d{10})|(([\\(]?([0-9]{3})[\\)]?)?[ \\.\\-]?([0-9]{3})[ \\.\\-]([0-9]{4}))$"
+            ,message = "Bad cel number")*/
     String telephone;
     String country;
     String region;
     String city;
+    @NotBlank(message = "Bad sex, can not be blank and can not be null")
+    String sex;
     String department;
     String postalCode;
     @NotBlank(message = "Bad password, can not be blank and can not be null")

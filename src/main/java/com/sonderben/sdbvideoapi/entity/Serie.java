@@ -1,5 +1,6 @@
 package com.sonderben.sdbvideoapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sonderben.sdbvideoapi.entity.base.BaseVideo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Serie extends BaseVideo {
     String description;
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     Set<Reward> rewards;//****
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable (
             name = "Series_Categories",
@@ -30,8 +32,18 @@ public class Serie extends BaseVideo {
             inverseJoinColumns = @JoinColumn(name = "category_fk")
     )
     Set<Category> categories;
+
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     Set<Season>seasons;
+
+    //////////////////////////////////
+    @JsonIgnore
+    @OneToOne(mappedBy = "serie",cascade = CascadeType.REMOVE)
+    MyList myList;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "movie",cascade = CascadeType.REMOVE)
+    Historic historic;
 
 
 

@@ -30,5 +30,5 @@ public class ClientResponseDto {
     Calendar dateClientCreate;
     TypeAccess access;
     Boolean allProfilesCanCreateNewProfile;
-    List<Profile> profileList;
+    Profile mainProfile;
 }

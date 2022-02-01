@@ -18,6 +18,7 @@ import java.util.Calendar;
 public class  MyList extends BaseHistoric implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     Calendar dateAdded;
+
     @OneToOne
     Serie serie;
 }

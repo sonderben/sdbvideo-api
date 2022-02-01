@@ -19,19 +19,21 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
     @Autowired
     MovieRepository repository;
 
-    public List<Dto> getMovieByCategory( Long categoryId, Long profileId, int pageNumber){
+    public List<SimpleMovieDto> getMovieByCategory( Long categoryId, Long profileId, int pageNumber){
         List<Movie>movieList=repository.getMovieByCategory(categoryId,profileId,pageNumber);
-        List<Dto> movieDaoList=new ArrayList<>();
+        List<SimpleMovieDto> movieDaoList=new ArrayList<>();
+
         for (int i = 0; i < movieList.size(); i++) {
-           MovieDto a=(MovieDto) Converter.convert(movieList.get(i),true);
+            System.err.println("url: "+movieList.get(i).getPoster());
+            SimpleMovieDto a= Converter.convert(movieList.get(i));
            a.setCurrentPlayingTime(repository.getCurrentPlayingTime(profileId,movieList.get(i).getId()));
             movieDaoList.add(a);
         }
         return movieDaoList;
     }
 
-    public List<Dto>getMovieByDescription(Long idProfile,String description,int pageNumber){
-        List<Movie>movieList=repository.getMovieByDescription(idProfile,description,pageNumber);
+    public List<Dto>getMovieByDescription(Long idProfile,String description,int pageNumber,String language){
+        List<Movie>movieList=repository.getMovieByDescription(idProfile,description,pageNumber,language);
         List<Dto> movieDaoList=new ArrayList<>();
         for (int i = 0; i < movieList.size(); i++) {
             setCurrentPlayingTime( idProfile, movieList.get(i),movieDaoList,true);
@@ -41,7 +43,7 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
     ////////////
     public void   setCurrentPlayingTime(Long idProfile,Movie movie,List<Dto> movieDaoList,boolean simple){
         //List<Dto> movieDaoList=new ArrayList<>();
-        Dto dto=Converter.convert(movie,simple);
+        Dto dto=Converter.convert(movie);
         SimpleMovieDto simpleMovieDto=null;
         MovieDto movieDto=null;
         Long currentPlayingTime=repository.getCurrentPlayingTime(idProfile, movie.getId());
@@ -81,7 +83,7 @@ public class MovieService /*extends BaseServiceImpl<Movie,Long>*/{
     public Dto findById(Long idMovie,Long idProfile,boolean simple) {
         SimpleMovieDto simpleMovieDto=null;
         MovieDto movieDto=null;
-        Dto a=Converter.convert(repository.getMovieById(idMovie,idProfile),simple);
+        Dto a=Converter.convert(repository.getMovieById(idMovie,idProfile));
         if(a instanceof SimpleMovieDto) {
             simpleMovieDto = (SimpleMovieDto) a;
             simpleMovieDto.setCurrentPlayingTime(repository.getCurrentPlayingTime(idProfile, idMovie));

@@ -27,4 +27,11 @@ public class TypeAccess extends BaseEntity implements Serializable {
     Integer code;
     @Column(length = 1,nullable = false)
     Integer NumOfScreen;
+
+    @Min(0)
+    @Max(100)
+    //@Column(nullable = false)
+    Float price;
+
+    String qualityImage;
 }

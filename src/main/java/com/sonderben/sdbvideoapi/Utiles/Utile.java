@@ -124,9 +124,10 @@ public class Utile {
             DecodedJWT a= JWT.require(algorithm).withIssuer("sonderben").build().verify(token);
             System.err.println("token: verified");
             return  a;
-        } catch (JWTVerificationException exception){
-            System.err.println(exception.getMessage());
+        } catch (JWTVerificationException e){
+            System.err.println(e.getMessage());
+            return null;
         }
-        return null;
+
     }
 }

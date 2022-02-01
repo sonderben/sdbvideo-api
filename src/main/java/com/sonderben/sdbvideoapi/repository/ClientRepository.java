@@ -1,9 +1,12 @@
 package com.sonderben.sdbvideoapi.repository;
 
 import com.sonderben.sdbvideoapi.entity.Client;
+import com.sonderben.sdbvideoapi.entity.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client,Long> {
@@ -20,7 +23,28 @@ public interface ClientRepository extends JpaRepository<Client,Long> {
             "where clients.id=(select client_id from profiles where profiles.id=?1)",nativeQuery = true)
     Client getClientByProfileId(Long ProfileId);
 
+    @Query(value = "select email from clients"+
+            " where clients.id=("+
+            " select client_id" +
+            " from profiles" +
+            " where profiles.id=?1 and profiles.is_main_profile=true)",nativeQuery = true)
+    String getEmailByProfileIdWhenIsMainProfile(Long profileId);
+
+    @Query(value = "select email from clients"+
+            " where clients.id=("+
+            " select client_id" +
+            " from profiles" +
+            " where profiles.id=?)",nativeQuery = true)
+    String getEmailByProfileId(Long profileId);
+
 
     Client findClientByEmailAndPassword(String email, String password);
-    Client findClientByEmail(String email);
+
+
+     Client findByEmail(String  email);
+
+
+
+
+
 }

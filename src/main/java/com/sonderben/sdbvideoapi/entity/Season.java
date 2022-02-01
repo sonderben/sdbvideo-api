@@ -27,7 +27,7 @@ public class Season extends BaseEntity {
     @Temporal(TemporalType.DATE)
     Calendar release;
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    List<TitleSynopsis>titleSynopseses;
+    Set<TitleSynopsis>titleSynopseses;
     String poster;
     String trailer;
     Calendar dateAdded;

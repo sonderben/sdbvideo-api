@@ -13,7 +13,7 @@ import java.util.Set;
 public class SeasonResponseDto extends Dto{
     Long id;
     Calendar release;
-    List<TitleSynopsis> titleSynopseses;
+    Set<TitleSynopsis> titleSynopseses;
     String poster;
     String trailer;
     Calendar dateAdded;

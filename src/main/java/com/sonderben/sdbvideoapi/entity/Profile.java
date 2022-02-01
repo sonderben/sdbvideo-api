@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "PROFILES")
@@ -29,13 +30,13 @@ public class Profile extends BaseEntity implements Serializable {
     String pin;
     @Column(length = 3) //iso 639-2
     String defaultLanguage;
-    int ageCategory;
+    Integer ageCategory;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable (
             name = "Profiles_Categories",
             joinColumns = @JoinColumn(name = "profiles_fk"),
             inverseJoinColumns = @JoinColumn(name = "category_fk")
     )
-    List<Category> categoryList;
+    Set<Category> categoryList;
 }

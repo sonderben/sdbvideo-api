@@ -21,6 +21,7 @@ public class TitleSynopsis extends BaseEntity implements Serializable {
     String title;
     @Column(length = 3) //iso 639-2
     String language;
+    @Column(length = 400)
     String Synopsis;
 
 

@@ -1,5 +1,6 @@
 package com.sonderben.sdbvideoapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sonderben.sdbvideoapi.entity.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,4 +38,8 @@ public class Episode extends BaseEntity {
             "{2,6}\\b([-a-zA-Z0-9@:%" +
             "._\\+~#?&//=]*)",message = "bad poster photo")
     String poster;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "episode",cascade = CascadeType.REMOVE)
+    Historic historic;
 }

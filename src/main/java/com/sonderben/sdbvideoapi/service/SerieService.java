@@ -18,13 +18,13 @@ public class SerieService /*extends BaseServiceImpl<Serie,Long>*/{
 
     @Autowired
     SerieRepository serieRepository;
-    public List<SimpleSerieDto> getSeriesByDescription(Long idProfile,String description,int pageNumber){
-        List<Serie>series=serieRepository.getSerieByDescription( idProfile, description, pageNumber);
-       List<SimpleSerieDto>serieDtos= Converter.convert(series);
+    public List<SimpleSerieDto> getSeriesByDescription(String description,Long idProfile,int pageNumber){
+        List<Serie>series=serieRepository.getSerieByDescription(  description,idProfile, pageNumber);
+      // List<SimpleSerieDto>serieDtos= Converter.convert(series);
         return Converter.convert(series);
     }
 
-    public List<SimpleSerieDto> getSeriesByCategory(Long categoryId,Long idProfile,int pageNumber){
+    public List<SimpleSerieDto> getSeriesByCategory(int categoryId,Long idProfile,int pageNumber){
         List<Serie>series=serieRepository.getSerieByCategory(categoryId, idProfile, pageNumber);
         return Converter.convert(series);
     }
