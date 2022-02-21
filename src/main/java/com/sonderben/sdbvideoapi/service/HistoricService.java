@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Service
-public class HistoricService extends BaseServiceImpl<Historic, Long> {
-    @Autowired
+//@Service
+public class HistoricService  {
+/*    @Autowired
     HistoricRepository repository;
 
     public List<HistoricDto> findByProfileOrderByDateLastVisited(int idUser, int pageNumber, boolean simple) {
@@ -69,6 +69,6 @@ public class HistoricService extends BaseServiceImpl<Historic, Long> {
             return repository.save(newHistoric);
         }
 
-    }
+    }*/
 
 }

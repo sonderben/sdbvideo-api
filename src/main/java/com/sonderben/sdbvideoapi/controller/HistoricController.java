@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+//@RestController
 @RequestMapping("historic")
 public class HistoricController /*extends BaseControllerImpl<Historic, HistoricService>*/{
-
+/*
     @Autowired
     HistoricService service;
     @GetMapping("/search_by")
@@ -53,5 +53,5 @@ public class HistoricController /*extends BaseControllerImpl<Historic, HistoricS
         return new ResponseEntity<>(service.updateByHistoricDto(entity), HttpStatus.OK);
     }
 
-    
+    */
 }

@@ -19,8 +19,7 @@ public class Utile {
     //@Value("${jwt.key}")
     static String KEY = "awed8kfSdDSa8!m";
     static Algorithm algorithm=Algorithm.HMAC256(KEY.getBytes());
-
-    public static String createDescriptionMovie(Movie movie) {
+    /*public static String createDescriptionMovie(Movie movie) {
         StringBuilder description = new StringBuilder();
         description.append(movie.getReleaseDate().getTime().getYear() + " ");
 
@@ -56,7 +55,7 @@ public class Utile {
             descriptionString = descriptionString.substring(0, 250);
         //System.out.println("description : " + descriptionString);
         return descriptionString.replace("null","");
-    }
+    }*/
 
     public static void unpackNested(String releaseDate, Calendar date) {
         String dateWithoutUnderscope = releaseDate.replace("-", " ");
@@ -128,6 +127,24 @@ public class Utile {
             System.err.println(e.getMessage());
             return null;
         }
+
+    }
+    public static String setDescription(String category) {
+        StringBuilder categoryStringBuilder=new StringBuilder();
+        if(category.trim().length()>0){
+            category.trim();
+            if(category.contains("+"))
+                category.replace("+"," ");
+
+            String []tempCategory= category.split(" ");
+
+            for (int i = 0; i < tempCategory.length; i++) {
+                categoryStringBuilder.append(tempCategory[i]+"|");
+            }
+            categoryStringBuilder.deleteCharAt(categoryStringBuilder.length()-1);
+            return categoryStringBuilder.toString().trim();
+        }
+        else return category;
 
     }
 }

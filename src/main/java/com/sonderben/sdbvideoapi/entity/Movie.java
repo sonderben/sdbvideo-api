@@ -1,9 +1,11 @@
 package com.sonderben.sdbvideoapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sonderben.sdbvideoapi.Utiles.Utile;
 import com.sonderben.sdbvideoapi.entity.base.BaseVideo;
+import com.sonderben.sdbvideoapi.entity.base.Subtitle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,32 +27,80 @@ import java.util.Set;
 @Getter
 @Setter
 
-@NamedEntityGraph(name = "simple_movie_graph",attributeNodes = {
-        @NamedAttributeNode("titleSynopsises"),
-        @NamedAttributeNode("releaseDate")
-})
+
 public class Movie extends BaseVideo implements Serializable {
 
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<TitleSynopsis> titleSynopsises;
+    private Set<TitleSynopsis> titleSynopses;
 
     @Temporal(TemporalType.TIMESTAMP)
     Calendar availability;
     @Column(nullable = false)
     String url;
-    @Column(length = 300)
-    String description;
-    @Temporal(TemporalType.DATE)
-    Calendar releaseDate;
-    String poster;
-    String trailer;
-    @Column(nullable = false)
-    Integer duration;
-
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     Set<Reward> rewards;
+    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable (
+            name = "movies_Actors",
+            joinColumns = @JoinColumn(name = "movie_fk"),
+            inverseJoinColumns = @JoinColumn(name = "actor_fk")
+    )
+    Set<Actor>actors;
+    @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<Subtitle> subtitles;
 
-  /*  @JsonProperty("releaseDate")
+
+
+    @Transient
+    @JsonInclude
+    String description;
+
+
+    @Transient
+    @JsonInclude
+    private Set<Category> categories;
+
+
+    @Transient
+    @JsonInclude
+    private int ageCategory;
+    @Transient
+    @JsonInclude
+    private Calendar releaseDate;
+    @Transient
+    @JsonInclude
+    private String poster;
+    @Transient
+    @JsonInclude
+    private String trailer;
+    @Transient
+    @JsonInclude
+    Integer duration;
+
+    @Transient
+    @JsonInclude
+    Plan plan;
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "titleSynopses=" + titleSynopses +
+                ", availability=" + availability +
+                ", url='" + url + '\'' +
+                ", rewards=" + rewards +
+                ", actors=" + actors +
+                ", subtitles=" + subtitles +
+                ", description='" + description + '\'' +
+                ", categories=" + categories +
+                ", ageCategory=" + ageCategory +
+                ", releaseDate=" + releaseDate +
+                ", poster='" + poster + '\'' +
+                ", trailer='" + trailer + '\'' +
+                ", duration=" + duration +
+                '}';
+    }
+}
+/*  @JsonProperty("releaseDate")
     private void unpackNested(String releaseDate){
         Utile.unpackNested(releaseDate,this.releaseDate);
     }
@@ -59,26 +109,3 @@ public class Movie extends BaseVideo implements Serializable {
         Utile.unpackNested(availability,this.availability);
     }
 */
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinTable (
-            name = "movies_Actors",
-            joinColumns = @JoinColumn(name = "movie_fk"),
-            inverseJoinColumns = @JoinColumn(name = "actor_fk")
-    )
-    Set<Actor>actors;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable (
-            name = "Movies_Categories",
-            joinColumns = @JoinColumn(name = "movie_fk"),
-            inverseJoinColumns = @JoinColumn(name = "category_fk")
-    )
-    Set<Category> categories;
-
-    @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Set<MovieSubtitle> movieSubtitles;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "movie",cascade = CascadeType.REMOVE)
-    Historic historic;
-}

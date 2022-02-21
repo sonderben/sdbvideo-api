@@ -13,12 +13,12 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 @Entity
-@Table(name = "TYPE_ACCESS")
+@Table(name = "Plan")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class TypeAccess extends BaseEntity implements Serializable {
+public class Plan extends BaseEntity implements Serializable {
     @Column(length = 50,nullable = false)
     String name;
     @Column(length = 4,nullable = false)

@@ -1,7 +1,7 @@
 package com.sonderben.sdbvideoapi.dto;
 
-import com.sonderben.sdbvideoapi.entity.EpisodeSubtitle;
 import com.sonderben.sdbvideoapi.entity.TitleSynopsis;
+import com.sonderben.sdbvideoapi.entity.base.Subtitle;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ import java.util.Set;
 public class EpisodeDto extends Dto {
     Long id;
     Set<TitleSynopsis> titleSynopses;
-    Set<EpisodeSubtitle> subtitles;
+    Set<Subtitle> subtitles;
     String url;
     Integer duration;
     String poster;

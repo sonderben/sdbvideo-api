@@ -1,13 +1,10 @@
 package com.sonderben.sdbvideoapi.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sonderben.sdbvideoapi.entity.Profile;
-import com.sonderben.sdbvideoapi.entity.TypeAccess;
+import com.sonderben.sdbvideoapi.entity.Plan;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.Calendar;
-import java.util.List;
 
 @Getter
 @Setter
@@ -28,7 +25,7 @@ public class ClientResponseDto {
     String postalCode;
     String password;
     Calendar dateClientCreate;
-    TypeAccess access;
+    Plan access;
     Boolean allProfilesCanCreateNewProfile;
     Profile mainProfile;
 }

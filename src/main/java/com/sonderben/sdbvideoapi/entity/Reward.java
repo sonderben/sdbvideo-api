@@ -22,6 +22,15 @@ import java.util.List;
 @Setter
 public class Reward extends BaseEntity implements Serializable {
 
+    @Override
+    public String toString() {
+        return "Reward{" +
+                "name='" + name + '\'' +
+                ", year=" + year +
+                ", donor='" + donor + '\'' +
+                ", Prize='" + Prize + '\'' +
+                '}';
+    }
 
     String name;
     @Temporal(TemporalType.DATE)

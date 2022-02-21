@@ -82,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.GET,"/category").hasAnyRole("USER","ADMIN")
                 .antMatchers("/episode","season").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.GET,"/movie/all/**","/movie/search/**","/movie/category/**",
+                .mvcMatchers(HttpMethod.GET,"/movie/video/**","/videos/**",
                         "/season/**","/episode/**").hasAnyRole("USER","ADMIN")
                 .mvcMatchers(HttpMethod.GET,"/serie*").hasAnyRole("USER","ADMIN")
                 .mvcMatchers(HttpMethod.GET,"/serie/category/**","/serie/search/**").hasAnyRole("USER","ADMIN")

@@ -41,6 +41,11 @@ public class Category extends BaseEntity implements Serializable {
     @ManyToMany(mappedBy = "categories",cascade = CascadeType.REMOVE)
     Set<Movie> movies;*/
 
-
-
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                ", code=" + code +
+                '}';
+    }
 }

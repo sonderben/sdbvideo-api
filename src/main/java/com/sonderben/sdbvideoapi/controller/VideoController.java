@@ -1,26 +1,40 @@
 package com.sonderben.sdbvideoapi.controller;
 
-import com.sonderben.sdbvideoapi.Utiles.Utile;
-import com.sonderben.sdbvideoapi.dto.Dto;
-import com.sonderben.sdbvideoapi.dto.SimpleMovieDto;
+import com.sonderben.sdbvideoapi.dto.VideoDto;
 import com.sonderben.sdbvideoapi.entity.Movie;
-import com.sonderben.sdbvideoapi.exception.BadRequestException;
+import com.sonderben.sdbvideoapi.entity.Video;
 import com.sonderben.sdbvideoapi.service.MovieService;
+import com.sonderben.sdbvideoapi.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Calendar;
 import java.util.List;
 //spring.datasource.url=jdbc:postgresql://localhost:5432/sdbvideodb
 //spring.datasource.url=jdbc:postgresql://db-instance-sdb-video.c4r9hb65ofm9.***REMOVED***.rds.amazonaws.com:5432/sdbvideodb
 
 @RestController
-@RequestMapping(path = "movie")
-public class MovieController extends BaseControllerImpl<Movie,MovieService> {
+@RequestMapping(path = "videos")
+public class VideoController /*extends BaseControllerImpl<Video, VideoService>*/{
+
+    @Autowired
+    VideoService videoService;
+
+    @GetMapping("category/{category_code}")
+    public ResponseEntity<List<VideoDto>> getVideoByCategory(@PathVariable(name = "category_code") Long categoryCode,
+                                                   @RequestParam(name = "profile") Long profileId,
+                                                   @RequestParam(name = "page",defaultValue = "0",required = false)int pageNumber){
+        return new ResponseEntity<>( videoService.getVideoByCategory(categoryCode,profileId,pageNumber), HttpStatus.OK);
+    }
+
+    @GetMapping("description/{description}")
+    public ResponseEntity<List<VideoDto>> getVideoByDescription(@PathVariable String description ,
+                                                                @RequestParam(name = "profile") Long profileId,
+                                                                @RequestParam(name = "page",defaultValue = "0",required = false) int pageNumber,
+                                                                @RequestParam(defaultValue = "english",required = false) String language){
+        return new ResponseEntity<>( videoService.getVideoByDescription(description,profileId,pageNumber,language),HttpStatus.OK);
+    }
   /*  @Autowired
     MovieService service;
 
@@ -114,10 +128,25 @@ public class MovieController extends BaseControllerImpl<Movie,MovieService> {
 */
 
 
-    @GetMapping("/video/{idVideo}")
-    @Transactional
-    public ResponseEntity<Dto> getOneById(@PathVariable Long idVideo,
-                                          @RequestParam("profile") Long profileId) {
-        return new ResponseEntity<>(service.findById(profileId, idVideo), HttpStatus.OK);
+    /*public Movie save(Movie e) {
+        return null;
     }
+
+
+    public Movie update(Movie entity, Long aLong) {
+        return null;
+    }
+
+
+    public Movie findById(Long aLong) {
+
+        return null;
+    }*/
+
+    /*@PostMapping("")
+    public String cool(){
+        return "m rive la a";
+    }*/
+
+
 }

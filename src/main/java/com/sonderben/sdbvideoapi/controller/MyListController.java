@@ -13,33 +13,33 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("my_list")
+//@RestController
+//@RequestMapping("my_list")
 public class MyListController /*extends BaseControllerImpl<MyList, MyListService>*/{
-    @Autowired
+ /*   @Autowired
     MyListService service;
     @GetMapping("search_by")
     @Transactional
     ResponseEntity<List<MyListDto>> findByProfileOrderByDateLastVisited
             (@RequestParam int idProfile,
-             @RequestParam (required = false,defaultValue = "0")  int pageNumber/*,
-             @RequestParam(required = false,defaultValue = "true") boolean simple*/){
-        return new ResponseEntity<>(service.findByIdProfileOrderByDateAdded(idProfile, pageNumber,true), HttpStatus.CREATED);
+             @RequestParam (required = false,defaultValue = "0")  int pageNumber,
+             @RequestParam(required = false,defaultValue = "true") boolean simple){
+     //   return new ResponseEntity<>(service.findByIdProfileOrderByDateAdded(idProfile, pageNumber,true), HttpStatus.CREATED);
     }
 
     @PostMapping("")
     @Transactional
     ResponseEntity<MyList> save(@RequestBody MyListRequestDto dto){
-        return new ResponseEntity<>(service.save(dto), HttpStatus.CREATED);
+      //  return new ResponseEntity<>(service.save(dto), HttpStatus.CREATED);
     }
     @GetMapping("")
     @Transactional
     ResponseEntity<List<MyList>> getAllAdm(){
-        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
+       // return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     ResponseEntity<MyList> delete(@PathVariable Long id){
-        return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
-    }
+      //  return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
+    }*/
 }

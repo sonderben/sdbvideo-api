@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client,Long> {
-    @Query(value = "select type_access.num_of_screen from type_access " +
-            "inner join Clients on type_access.id =Clients.access_id " +
+    @Query(value = "select plan.num_of_screen from plan " +
+            "inner join Clients on plan.id =Clients.plan_id " +
             "where clients.id=?1",nativeQuery = true)
     int getNumberOfScreenByIdClient(Long id);
 

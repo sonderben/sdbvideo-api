@@ -2,6 +2,7 @@ package com.sonderben.sdbvideoapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sonderben.sdbvideoapi.entity.base.BaseEntity;
+import com.sonderben.sdbvideoapi.entity.base.Subtitle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class Episode extends BaseEntity {
     Set<TitleSynopsis>titleSynopses;
     String skipIntro;//[12,34]
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    Set<EpisodeSubtitle> subtitles;
+    Set<Subtitle> subtitles;
     @Pattern(regexp = "((http|https)://)(www.)?" +
             "[a-zA-Z0-9@:%._\\+~#?&///=]" +
             "{2,256}\\.[a-z]" +
@@ -39,7 +40,5 @@ public class Episode extends BaseEntity {
             "._\\+~#?&//=]*)",message = "bad poster photo")
     String poster;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "episode",cascade = CascadeType.REMOVE)
-    Historic historic;
+
 }

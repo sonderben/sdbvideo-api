@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.*;
 
 public class Converter {
-    public static HistoricDto convert(Historic historic,boolean simple){
+   /* public static HistoricDto convert(Historic historic,boolean simple){
         if(historic!=null) {
             HistoricDto historicDao = HistoricDto.builder()
                     .id(historic.getId())
@@ -25,9 +25,9 @@ public class Converter {
         }
          else
              return null;
-    }
+    }*/
 
-    public static MyListDto convert(MyList myList, boolean simple){
+   /*public static MyListDto convert(MyList myList, boolean simple){
         if(myList!=null) {
             MyListDto myListDto = MyListDto.builder()
                     .id_profile(myList.getProfile().getId())
@@ -39,75 +39,61 @@ public class Converter {
         }
         else
             return null;
-    }
+    }*/
 
-    public static SimpleMovieDto convert(Movie movie){
+    /* public static SimpleMovieDto convert(Movie movie){
 
-        if(movie!=null) {
-            SimpleMovieDto movieDao;
-           /* if(!simple){
-                 movieDao = MovieDto.builder()
-                        .movieSubtitleList(movie.getMovieSubtitles())
-                        .access(movie.getAccess().getName())
-                        .actorList(movie.getActors())
-                        .availability(movie.getAvailability())
-                        .average(calculateAverage(movie))
-                        .categoryList(movie.getCategories())
-                        .id(movie.getId())
-                        .duration(movie.getDuration())
-                        .posterUrlMovie(movie.getPoster())
-                        .releaseDate(movie.getReleaseDate())
-                        .rewardList(movie.getRewards())
-                        .titlesSynopsis(movie.getTitleSynopsises())
-                        .trailerUrlMovie(movie.getTrailer())
-                        .urlMovie(movie.getUrl())
-                        .build();
-            }else*/
-                movieDao= SimpleMovieDto.builder()
-                        .id(movie.getId())
-                        .duration(movie.getDuration())
-                        .posterUrlMovie(movie.getPoster())
-                        .releaseDate(movie.getReleaseDate())
-                        .title(movie.getTitleSynopsises())
-                        .trailerUrlMovie(movie.getTrailer())
-                        .build();
+         if(movie!=null) {
+             SimpleMovieDto movieDao;
 
-            return movieDao;
-        }
-        else
-            return null;
-    }
-    public static Float calculateAverage(Movie movie){
-        int maxAverage=10;
-        int posVote= movie.getPositiveVote()==null?0: movie.getPositiveVote();
-        int negVote= movie.getNegativeVote()==null?0:movie.getNegativeVote();
-        int total=posVote+negVote;
-        Float average= (total < 0) ? 0F : (float)((posVote * maxAverage * 1.0) / total);
-        average=(float)Math.round(average*10)/10;
+                 movieDao= SimpleMovieDto.builder()
+                         .id(movie.getId())
+                         .duration(movie.getDuration())
+                         .posterUrlMovie(movie.getPoster())
+                         .releaseDate(movie.getReleaseDate())
+                         .title(movie.getTitleSynopsises())
+                         .trailerUrlMovie(movie.getTrailer())
+                         .build();
 
-        return average;
-    }
-    public static Float calculateAverage(Serie movie){
-        int maxAverage=10;
-        int posVote= movie.getPositiveVote()==null?0: movie.getPositiveVote();
-        int negVote= movie.getNegativeVote()==null?0:movie.getNegativeVote();
-        int total=posVote+negVote;
-        Float average= (total < 0) ? 0F : (float)((posVote * maxAverage * 1.0) / total);
-        average=(float)Math.round(average*10)/10;
+             return movieDao;
+         }
+         else
+             return null;
+     }*/
+    public static Float calculateAverage(Movie movie) {
+        int maxAverage = 10;
+        int posVote = movie.getPositiveVote() == null ? 0 : movie.getPositiveVote();
+        int negVote = movie.getNegativeVote() == null ? 0 : movie.getNegativeVote();
+        int total = posVote + negVote;
+        Float average = (total < 0) ? 0F : (float) ((posVote * maxAverage * 1.0) / total);
+        average = (float) Math.round(average * 10) / 10;
 
         return average;
     }
 
-    public static ProfileDto convert(Profile profile){
-        List<Long>cat=new ArrayList<>();
-        Iterator<Category> categoryIterator=profile.getCategoryList().iterator();
-        if(profile.getCategoryList()!=null)
-        //for (int i = 0; i < profile.getCategoryList().size(); i++) {
-            while (categoryIterator.hasNext()){
-            cat.add(categoryIterator.next().getId());
+    public static Float calculateAverage(Serie movie) {
+        int maxAverage = 10;
+        int posVote = movie.getPositiveVote() == null ? 0 : movie.getPositiveVote();
+        int negVote = movie.getNegativeVote() == null ? 0 : movie.getNegativeVote();
+        int total = posVote + negVote;
+        Float average = (total < 0) ? 0F : (float) ((posVote * maxAverage * 1.0) / total);
+        average = (float) Math.round(average * 10) / 10;
+
+        return average;
+    }
+
+    public static ProfileDto convert(Profile profile) {
+        List<Long> cat = new ArrayList<>();
+
+
+        if (profile.getCategoryList() != null) {
+            Iterator<Category> categoryIterator = profile.getCategoryList().iterator();
+            while (categoryIterator.hasNext()) {
+                cat.add(categoryIterator.next().getId());
             }
-        //}
-        ProfileDto profileDto=ProfileDto.builder()
+        }
+
+        ProfileDto profileDto = ProfileDto.builder()
                 .ageCategory(profile.getAgeCategory())
                 .id(profile.getId())
                 .isMainProfile(profile.getIsMainProfile())
@@ -115,28 +101,28 @@ public class Converter {
                 .pin(profile.getPin())
                 .defaultLanguage(profile.getDefaultLanguage())
                 .urlImg(profile.getUrlImg())
-                //.userId(profile.getUser().getId())
                 .categoryList(cat)
                 .build();
         return profileDto;
     }
 
-    public static LoginResponseAdministratorDTO convert(Administrator client,String token){
-        administratorDTO administratorDTO=com.sonderben.sdbvideoapi.dto.administratorDTO.builder()
+    public static LoginResponseAdministratorDTO convert(Administrator client, String token) {
+        administratorDTO administratorDTO = com.sonderben.sdbvideoapi.dto.administratorDTO.builder()
                 .fullName(client.getFullName())
                 .email(client.getEmail())
                 .id(client.getId())
                 .build();
 
-        LoginResponseAdministratorDTO loginResponseAdministratorDTO=
+        LoginResponseAdministratorDTO loginResponseAdministratorDTO =
                 LoginResponseAdministratorDTO.builder()
                         .user(administratorDTO)
                         .token(token)
                         .build();
         return loginResponseAdministratorDTO;
     }
-    public static administratorDTO convert(Administrator client){
-        administratorDTO administratorDTO=com.sonderben.sdbvideoapi.dto.administratorDTO.builder()
+
+    public static administratorDTO convert(Administrator client) {
+        administratorDTO administratorDTO = com.sonderben.sdbvideoapi.dto.administratorDTO.builder()
                 .fullName(client.getFullName())
                 .email(client.getEmail())
                 .id(client.getId())
@@ -145,8 +131,9 @@ public class Converter {
 
         return administratorDTO;
     }
-    public static ClientResponseDto convert(Client client){
-        return  ClientResponseDto.builder()
+
+    public static ClientResponseDto convert(Client client) {
+        return ClientResponseDto.builder()
                 .allProfilesCanCreateNewProfile(client.getAllProfilesCanCreateNewProfile())
                 .birthday(client.getBirthday())
                 .city(client.getCity())
@@ -154,7 +141,7 @@ public class Converter {
                 .country(client.getCountry())
                 .id(client.getId())
                 .department(client.getDepartment())
-                .access(client.getAccess())
+                .access(client.getPlan())
                 .firstName(client.getFirstName())
                 .LastName(client.getLastName())
                 .password(client.getPassword())
@@ -162,10 +149,11 @@ public class Converter {
                 .region(client.getRegion())
                 .telephone(client.getTelephone())
                 .email(client.getEmail())
-                .mainProfile(client.getProfileList().get(0))
+                //.mainProfile(client.getProfileList().get(0))
                 .build();
     }
-    public static Client convert(ClientRequestDto dto){
+
+    public static Client convert(ClientRequestDto dto) {
        /* Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Timestamp.from(Instant.now()).getTime());
        // entity.setDateClientCreate(calendar);
@@ -184,7 +172,7 @@ public class Converter {
         return Client.builder()
                 .birthday(dto.getBirthday())
                 .dateClientCreate(Calendar.getInstance())
-                .access(dto.getAccess())
+                .plan(dto.getAccess())
                 .allProfilesCanCreateNewProfile(dto.getAllProfilesCanCreateNewProfile())
                 .city(dto.getCity())
                 .sex(dto.getSex())
@@ -200,7 +188,8 @@ public class Converter {
                 .telephone(dto.getTelephone())
                 .build();
     }
-    public static List<SimpleSerieDto> convert(List<Serie> serie){
+
+    /*public static List<SimpleSerieDto> convert(List<Serie> serie){
         List<SimpleSerieDto>serieDtos=new ArrayList<>();
         List<Long>idSeasons;
 
@@ -291,8 +280,8 @@ public class Converter {
         }
         else
             return null;
-    }
-    public static Dto convert(Episode epo){
+    }*/
+    public static Dto convert(Episode epo) {
         return EpisodeDto.builder()
                 .duration(epo.getDuration())
                 .id(epo.getId())
@@ -303,13 +292,13 @@ public class Converter {
                 .build();
     }
 
-    public static Set<EpisodeDto> convertToEpisodeDto(Season season){
-        Set<Episode>episodeSet=season.getEpisodes();
-        Set<EpisodeDto> episodeDtoSet=new HashSet<>();
-        Iterator<Episode>episodeIterator=episodeSet.iterator();
-        while (episodeIterator.hasNext()){
+    public static Set<EpisodeDto> convertToEpisodeDto(Season season) {
+        Set<Episode> episodeSet = season.getEpisodes();
+        Set<EpisodeDto> episodeDtoSet = new HashSet<>();
+        Iterator<Episode> episodeIterator = episodeSet.iterator();
+        while (episodeIterator.hasNext()) {
             //EpisodeDto episode=( (EpisodeDto) convert( episodeIterator.next() ) );//episodeIterator.next();
-            episodeDtoSet.add( ( (EpisodeDto) convert( episodeIterator.next() ) ) );
+            episodeDtoSet.add(((EpisodeDto) convert(episodeIterator.next())));
         }
         return episodeDtoSet;
     }
@@ -325,5 +314,41 @@ public class Converter {
                 .trailer(entity.getTrailer())
                 .build();
 
+    }
+
+    public static List<VideoDto> convert(List<Video> video) {
+        List<VideoDto> videoDtos = new ArrayList<>();
+        video.forEach(v -> {
+            videoDtos.add(
+                    new VideoDto(v.getId(),v.getId_video(), v.getIsMovie(), v.getReleaseDate(), v.getPoster(), v.getTrailer(),
+                            v.getDuration(), v.getCurrentPlayingTime(), v.getDescription(), v.getAgeCategory(),
+                            getNamesCategories(v.getCategories()), getIdEpisode(v.getEpisode())));
+        });
+        return videoDtos;
+    }
+
+    private static List<String> getNamesCategories(Set<Category> categories) {
+        List<String> categoriesNames = new ArrayList<>();
+        Iterator<Category> categoryIterator = categories.iterator();
+        while (categoryIterator.hasNext()) {
+            categoriesNames.add(categoryIterator.next().getName());
+        }
+        return categoriesNames;
+    }
+
+    public static MovieDto convert(Movie movie){
+        return MovieDto.builder()
+                .availability(movie.getAvailability())
+                .id(movie.getId())
+                .actors(movie.getActors())
+                .rewards(movie.getRewards())
+                .titleSynopses(movie.getTitleSynopses())
+                .subtitles(movie.getSubtitles())
+                .url(movie.getUrl())
+                .build();
+    }
+
+    private static Long getIdEpisode(Episode episode) {
+        return episode == null ? null : episode.getId();
     }
 }

@@ -3,13 +3,13 @@ package com.sonderben.sdbvideoapi.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sonderben.sdbvideoapi.entity.base.BaseEntity;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.*;
 
@@ -49,7 +49,8 @@ public class Client extends BaseEntity implements UserDetails,Serializable {
    //@Column(insertable = false,updatable = false)
     Calendar dateClientCreate;
     @OneToOne
-    TypeAccess access;
+    @NotNull
+    Plan plan;
     @Column(columnDefinition = "boolean default false",insertable = false)
     Boolean allProfilesCanCreateNewProfile;
     @JsonIgnore

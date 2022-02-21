@@ -1,6 +1,7 @@
 package com.sonderben.sdbvideoapi.repository;
 
 import com.sonderben.sdbvideoapi.entity.Movie;
+import com.sonderben.sdbvideoapi.entity.Video;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public interface MovieRepository extends BaseRepository<Movie,Long>{
 //https://pganalyze.com/blog/full-text-search-django-postgres
 
-     @Query(value = "select * from movies " +
+    /* @Query(value = "select * from movies " +
              "       inner join type_access on " +
              "       type_access.id=movies.access_id " +
              "       inner join movies_categories on " +
@@ -26,7 +27,7 @@ public interface MovieRepository extends BaseRepository<Movie,Long>{
              "       LIMIT 25 OFFSET ?3",nativeQuery = true)
     List<Movie> getMovieByCategory( Long categoryCode,
                                        Long profileId,
-                                       int pageNumber);
+                                       int pageNumber);*/
 
    /* @Query(value = "select * from movies " +
                         "inner join type_access on " +
@@ -46,7 +47,7 @@ public interface MovieRepository extends BaseRepository<Movie,Long>{
 
 
 
-    @Query(value = " select " +
+   /* @Query(value = " select " +
             "ts_rank( to_tsvector( (?4)\\:\\:regconfig,movies.description), to_tsquery( (?4)\\:\\:regconfig,?2) ) as rank_, " +
             "  movies.id,movies.age_category,movies.negative_vote,movies.num_view,movies.positive_vote," +
             "  movies.availability,movies.description,movies.duration,movies.poster, " +
@@ -63,7 +64,7 @@ public interface MovieRepository extends BaseRepository<Movie,Long>{
             "                       order by rank_ desc LIMIT 25 OFFSET ?3 ",nativeQuery = true)
     List<Movie>getMovieByDescription( Long idProfile,
                                       String description,
-                                      int pageNumber,String language);
+                                      int pageNumber,String language);*/
 
 
 
@@ -75,7 +76,7 @@ public interface MovieRepository extends BaseRepository<Movie,Long>{
 
 
 
-    @Query(value = "select * from movies " +
+   /* @Query(value = "select * from movies " +
                         "inner join type_access on " +
                         "type_access.id=movies.access_id " +
                         "where type_access.code<= ( select type_access.code from clients " +
@@ -95,9 +96,24 @@ public interface MovieRepository extends BaseRepository<Movie,Long>{
                         "AND movies.id=?1 " +
                         "And movies.age_category<=(select age_category from profiles where profiles.id=?2) "
                         ,nativeQuery = true)
-    Movie getMovieById( Long idMovie,Long idProfile);
+    Movie getMovieById( Long idMovie,Long idProfile);*/
+    @Query(value = "select * from movies  " +
+            "where movies.id= " +
+            "(select id_video from video where video.id=?1 and is_movie=true)",nativeQuery = true)
+    Movie getMovieByIdVideo(Long idVideo);
 
-    @Query(value = "select * from movies " +
+    @Query(value = "Select video.id from video " +
+            "    inner join plan on " +
+            "    plan.id=video.plan_id" +
+            "    where plan.code <= ( select plan.code from clients" +
+            "                              join plan on" +
+            "                              plan.id=clients.plan_id" +
+            "                              where clients.id= (select client_id from profiles where profiles.id=?1) )" +
+            "     And video.id=?2" +
+            "     And video.age_category<=(select age_category from profiles where profiles.id=?1)",nativeQuery = true)
+    Long profileHavePermission(Long profileId, Long idMovie);
+
+   /* @Query(value = "select * from movies " +
             "inner join type_access on " +
             "type_access.id=movies.access_id " +
             "where type_access.code<= ( select type_access.code from clients " +
@@ -112,7 +128,7 @@ public interface MovieRepository extends BaseRepository<Movie,Long>{
 
     @Query(value = "select current_playing_time from historic where profile_id= ?1 and movie_id= ?2 "
             ,nativeQuery = true)
-    Long getCurrentPlayingTime( Long idProfile,Long idMovie);
+    Long getCurrentPlayingTime( Long idProfile,Long idMovie);*/
 
 
 

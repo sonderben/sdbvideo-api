@@ -1,29 +1,24 @@
 package com.sonderben.sdbvideoapi.service;
 
 import com.sonderben.sdbvideoapi.Utiles.Converter;
-import com.sonderben.sdbvideoapi.dto.Dto;
-import com.sonderben.sdbvideoapi.dto.MovieDto;
-import com.sonderben.sdbvideoapi.dto.SimpleMovieDto;
+import com.sonderben.sdbvideoapi.Utiles.Utile;
+import com.sonderben.sdbvideoapi.dto.VideoDto;
+import com.sonderben.sdbvideoapi.entity.Category;
 import com.sonderben.sdbvideoapi.entity.Movie;
 import com.sonderben.sdbvideoapi.entity.Video;
-import com.sonderben.sdbvideoapi.exception.BadRequestException;
+import com.sonderben.sdbvideoapi.exception.ConflictException;
 import com.sonderben.sdbvideoapi.exception.NoDataFoundException;
-import com.sonderben.sdbvideoapi.repository.MovieRepository;
 import com.sonderben.sdbvideoapi.repository.VideoRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Service
-public class MovieService extends BaseServiceImpl<Movie, Long> {
-    @Autowired
-    VideoService videoService;
-    @Autowired
-    MovieRepository movieRepository;
-
+public class VideoService extends BaseServiceImpl<Video, Long> {
   /*  @Autowired
     MovieRepository repository;
 
@@ -124,51 +119,25 @@ public class MovieService extends BaseServiceImpl<Movie, Long> {
         return repository.save(entity);
     }*/
 
-    @Override
-    public Movie save(Movie e) {
-        super.repository.save(e);
-        ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    VideoRepository videoRepository;
 
-        Video video = Video.builder()
-                .plan(e.getPlan())
-                .ageCategory(e.getAgeCategory())
-                .categories(e.getCategories())
-                // .currentPlayingTime(null)
-                .description(e.getDescription())
-                .duration(e.getDuration())
-                .id_video(e.getId())
-                .isMovie(true)
-                // .episode(null)
-                .titleSynopses(e.getTitleSynopses())
-                .poster(e.getPoster())
-                .releaseDate(e.getReleaseDate())
-                .trailer(e.getTrailer())
-                .build();
+    public List<VideoDto> getVideoByCategory(Long categoryCode, Long profileId, int pageNumber) {
+        return Converter.convert( videoRepository.getVideoByCategory(categoryCode, profileId, pageNumber) );
+    }
 
-        videoService.save(video);
-
-        return e;
+    public List<VideoDto> getVideoByDescription(String description, Long profileId, int pageNumber, String language) {
+        return Converter.convert( videoRepository.getVideoByDescription(profileId,
+                Utile.setDescription(description), pageNumber, language) );
     }
 
 
-    public MovieDto findById( Long idProfile,Long idVideo) {
-        Long id=movieRepository.profileHavePermission( idProfile,idVideo);
-        System.err.println("idProfile: "+idProfile+" idVideo: "+idVideo);
-
-        if (id != null) {
-            Movie movie = movieRepository.getMovieByIdVideo(idVideo);
-            if (movie != null)
-                return Converter.convert(movie);
-            throw new NoDataFoundException("movie don't exist");
-
-        }
-        throw new NoDataFoundException("No data found or access denied");
+    public Long findId_videoByIdMovie(Long id,boolean isMovie){
+        return videoRepository.findIdMovieByIdVideo(id,isMovie);
     }
 
     @Override
-    public Movie delete(Long aLong) {
-        Movie movie = super.delete(aLong);
-        videoService.delete(videoService.findId_videoByIdMovie(aLong, true));
-        return movie;
+    public Video delete(Long aLong) {
+        throw new ConflictException("video can be deleted only when the associated movie is delete");
     }
 }

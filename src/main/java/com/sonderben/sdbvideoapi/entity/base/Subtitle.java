@@ -17,8 +17,19 @@ import java.util.Calendar;
 @NoArgsConstructor
 @Getter
 @Setter
-@MappedSuperclass
+//@MappedSuperclass
+@Entity
 public class Subtitle extends BaseEntity implements Serializable {
+    @Override
+    public String toString() {
+        return "Subtitle{" +
+                "id=" + id +
+                ", language='" + language + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", uploadDate=" + uploadDate +
+                ", author='" + author + '\'' +
+                '}';
+    }
 
     @Column(length = 3)
     String language;

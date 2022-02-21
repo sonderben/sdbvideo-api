@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@Service
-public class MyListService extends BaseServiceImpl<MyList,Long>{
-    @Autowired
+//@Service
+public class MyListService {
+    /*@Autowired
     MyListRepository repository;
 
     public List<MyListDto> findByIdProfileOrderByDateAdded(int idUser, int pageNumber, boolean simple){
@@ -45,4 +45,5 @@ public class MyListService extends BaseServiceImpl<MyList,Long>{
         return repository.save(myList1);
 
     }
+    */
 }

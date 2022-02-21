@@ -14,7 +14,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("serie")
-public class SerieController  {
+public class SerieController  extends BaseControllerImpl<Serie,SerieService>{
+/*
 
     @Autowired
     SerieService service;
@@ -75,5 +76,6 @@ public class SerieController  {
         Serie serie=service.delete(id);
         return new ResponseEntity<>(serie,HttpStatus.OK);
     }
+*/
 
 }

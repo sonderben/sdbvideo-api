@@ -8,15 +8,15 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 @Data
-@Entity
+//@Entity
 public class Historic extends BaseHistoric implements Serializable {
-    @OneToOne
+   /* @OneToOne
     Episode episode;
     @Column(nullable = false)
     Integer currentPlayingTime;
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    Calendar dateLastVisited;
+    Calendar dateLastVisited;*/
 
 
 

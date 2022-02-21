@@ -4,5 +4,5 @@ import com.sonderben.sdbvideoapi.entity.TitleSynopsis;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TitleSynopsisMovieRepository extends BaseRepository<TitleSynopsis,Long> {
+public interface TitleSynopsisRepository extends BaseRepository<TitleSynopsis,Long> {
 }

@@ -34,7 +34,7 @@ public class Season extends BaseEntity {
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     Set<Episode> episodes;
 
-    @JsonProperty("release")
+    /*@JsonProperty("release")
     private void unpackNested(String release){
         this.release=Utile.unpackNestedDate(release);
     }
@@ -42,6 +42,6 @@ public class Season extends BaseEntity {
     private void unpackNested_(String dateAdded){
         this.dateAdded=Utile.unpackNestedDate(dateAdded);
         //System.err.println("date added");
-    }
+    }*/
 
 }

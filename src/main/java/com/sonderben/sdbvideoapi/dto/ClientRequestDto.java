@@ -2,7 +2,7 @@ package com.sonderben.sdbvideoapi.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sonderben.sdbvideoapi.entity.TypeAccess;
+import com.sonderben.sdbvideoapi.entity.Plan;
 import lombok.*;
 
 
@@ -39,13 +39,13 @@ public class ClientRequestDto {
     @Size(min = 3,message = "Bad password, size must be greater than 3")
     String password;
     //@NotNull(message = "access can not be null")
-    TypeAccess access;
+    Plan access;
     @NotNull(message = "allProfilesCanCreateNewProfile can not be blank and can not be null")
     Boolean allProfilesCanCreateNewProfile;
     @JsonProperty("access_id")
     private void unpackNested(Long access_id){
         if(access_id!=null) {
-            this.access = new TypeAccess();
+            this.access = new Plan();
             access.setId(access_id);
         }
     }

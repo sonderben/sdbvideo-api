@@ -12,13 +12,13 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Calendar;
 
-@Entity
+//@Entity
 @Data
 @NoArgsConstructor
 public class  MyList extends BaseHistoric implements Serializable {
-    @Temporal(TemporalType.TIMESTAMP)
+   /* @Temporal(TemporalType.TIMESTAMP)
     Calendar dateAdded;
 
     @OneToOne
-    Serie serie;
+    Serie serie;*/
 }
