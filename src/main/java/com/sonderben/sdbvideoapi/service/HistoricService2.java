@@ -148,7 +148,6 @@ public class HistoricService2 {
 
 
 
-
         }
 
         //that could do client side
