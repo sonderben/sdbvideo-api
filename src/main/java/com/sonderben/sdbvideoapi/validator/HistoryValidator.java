@@ -1,11 +1,11 @@
 package com.sonderben.sdbvideoapi.validator;
 
 import com.sonderben.sdbvideoapi.dto.Dto;
-import com.sonderben.sdbvideoapi.dto.HistoricRequestDto;
+//import com.sonderben.sdbvideoapi.dto.HistoricRequestDto;
 import com.sonderben.sdbvideoapi.exception.BadRequestException;
 
-public class HistoryValidator implements SdbValidator {
-    @Override
+public class HistoryValidator/* implements SdbValidator*/ {
+   /* @Override
     public void validateInsert(Dto e) {
         if(e instanceof HistoricRequestDto){
            // System.err.println("validate");
@@ -22,9 +22,6 @@ public class HistoryValidator implements SdbValidator {
             throw new RuntimeException(" wrong argument");
         }
     }
-
-
-
     @Override
     public void validateUpdate(Dto e) {
         if(e instanceof HistoricRequestDto){
@@ -38,5 +35,5 @@ public class HistoryValidator implements SdbValidator {
         else {
             throw new RuntimeException(" wrong argument");
         }
-    }
+    }*/
 }

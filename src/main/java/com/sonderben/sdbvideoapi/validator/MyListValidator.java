@@ -1,7 +1,7 @@
 package com.sonderben.sdbvideoapi.validator;
 
 import com.sonderben.sdbvideoapi.dto.Dto;
-import com.sonderben.sdbvideoapi.dto.HistoricRequestDto;
+//import com.sonderben.sdbvideoapi.dto.HistoricRequestDto;
 import com.sonderben.sdbvideoapi.dto.MyListRequestDto;
 import com.sonderben.sdbvideoapi.exception.BadRequestException;
 

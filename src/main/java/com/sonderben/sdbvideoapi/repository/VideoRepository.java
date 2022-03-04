@@ -33,6 +33,23 @@ public interface VideoRepository extends BaseRepository<Video,Long>{
 
 
 
+    @Query(value = "select * from video" +
+            " inner join plan on" +
+            " plan.id=video.plan_ID" +
+            " And video.id=?2" +
+            " AND plan.code<= ( SELECT plan.code FROM clients" +
+            "                  INNER JOIN plan on" +
+            "                  plan.id=clients.plan_id" +
+            "                  WHERE clients.id=( SELECT client_id FROM profiles WHERE profiles.id= ?1 ) )" +
+            " AND video.age_category<= (SELECT age_category FROM profiles WHERE profiles.id= ?1)"
+            ,nativeQuery = true)
+     Video getVideoByIdAndIdProfile(Long idProfile,Long idVideo);
+
+
+
+
+
+
     @Query(value = " Select ts_rank( to_tsvector( ?4\\:\\:regconfig,video.description), to_tsquery( ?4\\:\\:regconfig,?2) ) as rank_, " +
             "              video.id,video.id_video, video.age_category,video.description,video.duration,video.poster, " +
             "              video.release_date,video.is_movie,video.trailer,video.plan_id from video " +

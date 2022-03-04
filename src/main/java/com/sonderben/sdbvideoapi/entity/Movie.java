@@ -1,9 +1,6 @@
 package com.sonderben.sdbvideoapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sonderben.sdbvideoapi.Utiles.Utile;
 import com.sonderben.sdbvideoapi.entity.base.BaseVideo;
 import com.sonderben.sdbvideoapi.entity.base.Subtitle;
 import lombok.AllArgsConstructor;
@@ -13,11 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Set;
 
 @Entity

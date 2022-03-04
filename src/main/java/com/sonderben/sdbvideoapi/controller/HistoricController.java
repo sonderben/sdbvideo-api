@@ -1,16 +1,6 @@
 package com.sonderben.sdbvideoapi.controller;
 
-import com.sonderben.sdbvideoapi.dto.HistoricDto;
-import com.sonderben.sdbvideoapi.dto.HistoricRequestDto;
-import com.sonderben.sdbvideoapi.entity.Historic;
-import com.sonderben.sdbvideoapi.service.HistoricService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 //@RestController
 @RequestMapping("historic")

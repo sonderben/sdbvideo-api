@@ -1,19 +1,5 @@
 package com.sonderben.sdbvideoapi.service;
 
-import com.sonderben.sdbvideoapi.Utiles.Converter;
-import com.sonderben.sdbvideoapi.dto.HistoricDto;
-import com.sonderben.sdbvideoapi.dto.HistoricRequestDto;
-import com.sonderben.sdbvideoapi.entity.Historic;
-import com.sonderben.sdbvideoapi.exception.BadRequestException;
-import com.sonderben.sdbvideoapi.repository.HistoricRepository;
-import com.sonderben.sdbvideoapi.validator.HistoryValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 //@Service
 public class HistoricService  {
 /*    @Autowired

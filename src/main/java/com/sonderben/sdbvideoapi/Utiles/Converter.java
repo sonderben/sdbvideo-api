@@ -320,11 +320,19 @@ public class Converter {
         List<VideoDto> videoDtos = new ArrayList<>();
         video.forEach(v -> {
             videoDtos.add(
-                    new VideoDto(v.getId(),v.getId_video(), v.getIsMovie(), v.getReleaseDate(), v.getPoster(), v.getTrailer(),
+                    new VideoDto(v.getId(), v.getId_video(), v.getIsMovie(), v.getReleaseDate(), v.getPoster(), v.getTrailer(),
                             v.getDuration(), v.getCurrentPlayingTime(), v.getDescription(), v.getAgeCategory(),
-                            getNamesCategories(v.getCategories()), getIdEpisode(v.getEpisode())));
+                            getNamesCategories(v.getCategories()) ,getIdEpisode(v.getEpisode())));
         });
         return videoDtos;
+    }
+
+    public static VideoDto convert(Video v) {
+        //v.getS
+        return new VideoDto(v.getId(), v.getId_video(), v.getIsMovie(), v.getReleaseDate(), v.getPoster(), v.getTrailer(),
+                v.getDuration(), v.getCurrentPlayingTime(), v.getDescription(), v.getAgeCategory(),
+                getNamesCategories(v.getCategories()), getIdEpisode(v.getEpisode()));
+
     }
 
     private static List<String> getNamesCategories(Set<Category> categories) {
@@ -336,7 +344,7 @@ public class Converter {
         return categoriesNames;
     }
 
-    public static MovieDto convert(Movie movie){
+    public static MovieDto convert(Movie movie) {
         return MovieDto.builder()
                 .availability(movie.getAvailability())
                 .id(movie.getId())

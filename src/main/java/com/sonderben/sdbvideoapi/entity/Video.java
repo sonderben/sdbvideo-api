@@ -28,22 +28,6 @@ public class Video extends BaseEntity {
     @OneToMany(orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<TitleSynopsis> titleSynopses;
 
-/*public Video(Long id, Long id_video, boolean isMovie, Calendar releaseDate, String poster, String trailer, Integer duration
-            , Long currentPlayingTime, Plan access, int ageCategory, Set<Category> categories, Episode episode) {
-        this.id = id;
-        this.id_video = id_video;
-        this.isMovie = isMovie;
-        this.releaseDate = releaseDate;
-        this.poster = poster;
-        this.trailer = trailer;
-        this.duration = duration;
-        this.currentPlayingTime = currentPlayingTime;
-        this.access = access;
-        this.ageCategory = ageCategory;
-        this.categories = categories;
-        this.episode = episode;
-
-    }*/
 
 
     @Temporal(TemporalType.DATE)

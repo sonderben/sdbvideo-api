@@ -1,22 +1,39 @@
 package com.sonderben.sdbvideoapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sonderben.sdbvideoapi.entity.Movie;
+import com.sonderben.sdbvideoapi.entity.Profile;
+import com.sonderben.sdbvideoapi.entity.Serie;
+import com.sonderben.sdbvideoapi.entity.aws.Episode;
+import lombok.*;
 
-import lombok.Builder;
-import lombok.Getter;
-
-
-
-import java.io.Serializable;
 import java.util.Calendar;
-
+import java.util.List;
 
 @Builder
 @Getter
-public class HistoricDto extends Dto implements Serializable {
-    Long id;
-    Long id_profile;
-    Dto movie;
-    Dto episode;
-    int currentPlayingTime;
-    Calendar dateLastVisited;
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class HistoricDto   {
+    private Long idProfile;
+    private Long idVideo;
+    private Long dateLastVisited;
+    private Long Duration;
+    private Long currentPlayingTime;
+    private Long idSeason;
+    private boolean isMovie;
+
+    @Override
+    public String toString() {
+        return "HistoricDto{" +
+                "idProfile=" + idProfile +
+                ", idVideo=" + idVideo +
+                ", dateLastVisited=" + dateLastVisited +
+                ", Duration=" + Duration +
+                ", currentPlayingTime=" + currentPlayingTime +
+                ", idSeason=" + idSeason +
+                ", isMovie=" + isMovie +
+                '}';
+    }
 }

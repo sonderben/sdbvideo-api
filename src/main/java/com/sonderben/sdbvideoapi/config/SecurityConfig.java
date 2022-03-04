@@ -1,13 +1,12 @@
 package com.sonderben.sdbvideoapi.config;
 
 import com.sonderben.sdbvideoapi.security.TokenAuthenticationFilter;
-import com.sonderben.sdbvideoapi.security.TokenAuthenticationFilterAdmin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -79,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .mvcMatchers(HttpMethod.DELETE,"/client/session**").hasRole("USER")
                 .mvcMatchers(HttpMethod.DELETE,"/client/session/**").hasRole("USER")
-
+                .mvcMatchers("/my_lists/**","/my_lists").hasAnyRole("USER","ADMIN")
                 .antMatchers(HttpMethod.GET,"/category").hasAnyRole("USER","ADMIN")
                 .antMatchers("/episode","season").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.GET,"/movie/video/**","/videos/**",
