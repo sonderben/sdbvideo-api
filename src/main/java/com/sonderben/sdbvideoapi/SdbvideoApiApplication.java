@@ -35,6 +35,10 @@ public class SdbvideoApiApplication {
 
 
 	public static void main(String[] args) {
+
+
+
+		//for trying
 		SpringApplication.run(SdbvideoApiApplication.class, args);
 
 		HistoricService2 service2=new HistoricService2();

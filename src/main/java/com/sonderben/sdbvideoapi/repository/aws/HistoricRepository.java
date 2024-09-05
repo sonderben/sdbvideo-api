@@ -92,16 +92,16 @@ public class HistoricRepository {
     }
 
     private AmazonDynamoDB buildAmazonDynamoDB(){
-        ///EE.UU. Este (Ohio)***REMOVED***
+        ///EE.UU. Este (Ohio)us-east-2
         return AmazonDynamoDBClientBuilder
                 .standard()
                 .withEndpointConfiguration(
                         new AwsClientBuilder.EndpointConfiguration(
-                                "***REMOVED***","***REMOVED***"
+                                "dynamodb.us-east-2.amazonaws.com","us-east-2"
                         )
                 ).withCredentials(new AWSStaticCredentialsProvider(
                         new BasicAWSCredentials(
-                                "***REMOVED***","***REMOVED***"
+                                "AKIAXJTGGMWYJ7L5HOM2","ZMwLMLFZkxXsaiDSf3xgXdzpvnInklgTXUCPj+/w"
                         )
                 )).build();
     }

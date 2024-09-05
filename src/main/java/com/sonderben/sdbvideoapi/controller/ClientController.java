@@ -43,7 +43,7 @@ public class ClientController {
                 .name("Main profile")
                 .pin("1234")
                 .defaultLanguage("fr")
-                //https://ejemploht.s3.***REMOVED***.amazonaws.com/img-profile/ersenb.png
+                //https://ejemploht.s3.us-east-2.amazonaws.com/img-profile/ersenb.png
                 .urlImg("https://sdbvideo.s3.amazonaws.com/profile+pictures/panchb.jpg").build();
 
         entitySave.setProfileList(Collections.singletonList(profile));

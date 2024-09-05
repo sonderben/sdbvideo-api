@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class DynamoDBConfig {// DynamoDBConfig
+public class DynamoDBConfig {
 
     @Bean
     public DynamoDBMapper dynamoDBMapper(){
@@ -19,16 +19,16 @@ public class DynamoDBConfig {// DynamoDBConfig
 
 
     private AmazonDynamoDB buildAmazonDynamoDB(){
-        ///EE.UU. Este (Ohio)***REMOVED***
+
         return AmazonDynamoDBClientBuilder
                 .standard()
                 .withEndpointConfiguration(
                         new AwsClientBuilder.EndpointConfiguration(
-                                "***REMOVED***","***REMOVED***"
+                                "**serviceEndpoint**","**signingRegion**"
                         )
                 ).withCredentials(new AWSStaticCredentialsProvider(
                         new BasicAWSCredentials(
-                                "***REMOVED***","***REMOVED***"
+                                "**accessKey**","**secretKey**"
                         )
                 )).build();
     }

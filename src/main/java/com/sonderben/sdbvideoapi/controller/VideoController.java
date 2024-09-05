@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 //spring.datasource.url=jdbc:postgresql://localhost:5432/sdbvideodb
-//spring.datasource.url=jdbc:postgresql://db-instance-sdb-video.c4r9hb65ofm9.***REMOVED***.rds.amazonaws.com:5432/sdbvideodb
+//spring.datasource.url=jdbc:postgresql://db-instance-sdb-video.c4r9hb65ofm9.us-east-2.rds.amazonaws.com:5432/sdbvideodb
 
 @RestController
 @RequestMapping(path = "videos")
